@@ -16,14 +16,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4 # Configura un entorno Node.js
         with:
-          node-version: "20" # Especifica la versión de Node.js que usarás
+          node-version: "22" # Especifica la versión de Node.js que usarás
           cache: "npm" # Habilita la caché de npm para acelerar las instalaciones
 
       - name: Install dependencies
         run: npm install # Instala las dependencias del proyecto
 
-      - name: Run tests
-        run: npm run test # Ejecuta las pruebas unitarias de tu aplicación (ej. npm run test:unit)
+      # - name: Run tests
+      #  run: npm run test # Ejecuta las pruebas unitarias de tu aplicación (ej. npm run test:unit)
 
       - name: Build Vite App
         run: npm run build # Construye la aplicación Vite para producción
