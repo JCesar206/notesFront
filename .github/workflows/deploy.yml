@@ -1,36 +1,44 @@
-name: Deploy Vite App to GitHub Pages
+# Simple workflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
 
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      - main # Desencadena el flujo de trabajo en cada push a la rama main
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  # Single deploy job since we're just deploying
+  deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5 # Acción para clonar el repositorio
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v5 # Configura un entorno Node.js
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Set up Node
+        uses: actions/setup-node@v5
         with:
-          node-version: "22" # Especifica la versión de Node.js que usarás
-          cache: "npm" # Habilita la caché de npm para acelerar las instalaciones
-
+          node-version: lts/*
+          cache: "npm"
       - name: Install dependencies
-        run: npm install # Instala las dependencias del proyecto
-
-      # - name: Run tests
-      #  run: npm run test # Ejecuta las pruebas unitarias de tu aplicación (ej. npm run test:unit)
-
-      - name: Build Vite App
-        run: npm run build # Construye la aplicación Vite para producción
-
+        run: npm ci
+      - name: Build
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
