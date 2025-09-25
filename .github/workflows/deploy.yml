@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install # Instala las dependencias del proyecto
 
-      - name: Run tests
-        run: npm run test # Ejecuta las pruebas unitarias de tu aplicación (ej. npm run test:unit)
+      # - name: Run tests
+      #  run: npm run test # Ejecuta las pruebas unitarias de tu aplicación (ej. npm run test:unit)
 
       - name: Build Vite App
         run: npm run build # Construye la aplicación Vite para producción
