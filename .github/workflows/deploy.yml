@@ -1,43 +1,35 @@
-name: Deploy Frontend to GitHub Pages (Vite)
+name: Deploy Vite App to GitHub Pages
 
 on:
   push:
     branches:
-      - main
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+      - main # Desencadena el flujo de trabajo en cada push a la rama main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+  build-and-deploy:
+    runs-on: ubuntu-latest # Ejecuta en un entorno Ubuntu reciente
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Acción para clonar el repositorio
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # Configura un entorno Node.js
         with:
-          node-version: 22
+          node-version: "20" # Especifica la versión de Node.js que usarás
+          cache: "npm" # Habilita la caché de npm para acelerar las instalaciones
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install # Instala las dependencias del proyecto
 
-      - name: Build
-        run: npm run build
-        env:
-          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+      - name: Run tests
+        run: npm run test # Ejecuta las pruebas unitarias de tu aplicación (ej. npm run test:unit)
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: dist
+      - name: Build Vite App
+        run: npm run build # Construye la aplicación Vite para producción
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        uses: peaceiris/actions-gh-pages@v3 # Acción para desplegar en GitHub Pages
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} # Token de acceso generado automáticamente por GitHub
+          publish_dir: ./dist # Directorio donde Vite genera los archivos de producción
