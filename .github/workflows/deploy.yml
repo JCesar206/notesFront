@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4 # Configura un entorno Node.js
         with:
-          node-version: "20" # Especifica la versión de Node.js que usarás
+          node-version: "22" # Especifica la versión de Node.js que usarás
           cache: "npm" # Habilita la caché de npm para acelerar las instalaciones
 
       - name: Install dependencies
