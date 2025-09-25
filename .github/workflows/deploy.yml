@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # Acción para clonar el repositorio
+        uses: actions/checkout@v5 # Acción para clonar el repositorio
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4 # Configura un entorno Node.js
+        uses: actions/setup-node@v5 # Configura un entorno Node.js
         with:
           node-version: "22" # Especifica la versión de Node.js que usarás
           cache: "npm" # Habilita la caché de npm para acelerar las instalaciones
@@ -28,8 +28,13 @@ jobs:
       - name: Build Vite App
         run: npm run build # Construye la aplicación Vite para producción
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3 # Acción para desplegar en GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # Token de acceso generado automáticamente por GitHub
-          publish_dir: ./dist # Directorio donde Vite genera los archivos de producción
+          # Upload dist folder
+          path: "./dist"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
