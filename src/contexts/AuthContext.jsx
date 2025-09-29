@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
   }, [user]);
 
   const api = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: "https://notesback-tb4o.onrender.com/api",
     headers: token ? { Authorization: `Bearer ${token}` } : {}
   });
 
