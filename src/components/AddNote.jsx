@@ -10,13 +10,26 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [favorite, setFavorite] = useState(false);
+
+  const translations = {
+    es: {
+      add: "Agregar Nota",
+      update: "Actualizar Nota",
+      title: "Título",
+      content: "Contenido",
+    },
+    en: {
+      add: "Add Note",
+      update: "Update Note",
+      title: "Title",
+      content: "Content",
+    },
+  };
 
   useEffect(() => {
     if (noteToEdit) {
       setTitle(noteToEdit.title);
       setContent(noteToEdit.content);
-      setFavorite(noteToEdit.favorite);
     }
   }, [noteToEdit]);
 
@@ -29,68 +42,53 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
       if (noteToEdit) {
         await axios.put(
           `${BASE_URL}/notes/${noteToEdit.id}`,
-          { title, content, favorite },
+          { title, content },
           { headers: { Authorization: `Bearer ${token}` } }
         );
+        setNoteToEdit(null);
       } else {
         await axios.post(
           `${BASE_URL}/notes`,
-          { title, content, favorite },
+          { title, content },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       }
-      fetchNotes();
       setTitle("");
       setContent("");
-      setFavorite(false);
-      setNoteToEdit(null);
-    } catch (error) {
-      console.error("Error saving note:", error);
+      fetchNotes();
+    } catch (err) {
+      console.error("Error saving note:", err);
     }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className={`${darkMode ? "bg-gray-800" : "bg-white"} p-4 rounded shadow-md flex flex-col gap-3`}
+      className={`p-4 rounded shadow-md ${
+        darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
+      }`}
     >
       <input
         type="text"
-        placeholder={lang === "es" ? "Título" : "Title"}
+        placeholder={translations[lang].title}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        className="w-full mb-2 p-2 border rounded cursor-text"
         required
-        className="p-2 rounded border dark:bg-gray-700 cursor-text"
       />
-
       <textarea
-        placeholder={lang === "es" ? "Contenido" : "Content"}
+        placeholder={translations[lang].content}
         value={content}
         onChange={(e) => setContent(e.target.value)}
+        className="w-full mb-2 p-2 border rounded cursor-text"
+        rows="3"
         required
-        className="p-2 rounded border dark:bg-gray-700 cursor-text"
       />
-
-      <label className="flex items-center gap-2 cursor-pointer">
-        <input
-          type="checkbox"
-          checked={favorite}
-          onChange={(e) => setFavorite(e.target.checked)}
-        />
-        {lang === "es" ? "Favorito" : "Favorite"}
-      </label>
-
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded p-2 cursor-pointer"
+        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded cursor-pointer"
       >
-        {noteToEdit
-          ? lang === "es"
-            ? "Actualizar Nota"
-            : "Update Note"
-          : lang === "es"
-            ? "Agregar Nota"
-            : "Add Note"}
+        {noteToEdit ? translations[lang].update : translations[lang].add}
       </button>
     </form>
   );

@@ -8,51 +8,57 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
   const { lang } = useContext(LangContext);
   const { darkMode } = useContext(ThemeContext);
 
-  const handleDelete = async (id) => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
+  const translations = {
+    es: { edit: "Editar", delete: "Eliminar", noNotes: "No hay notas" },
+    en: { edit: "Edit", delete: "Delete", noNotes: "No notes" },
+  };
 
+  const token = localStorage.getItem("token");
+
+  const handleDelete = async (id) => {
     try {
       await axios.delete(`${BASE_URL}/notes/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchNotes();
-    } catch (error) {
-      console.error("Error deleting note:", error);
+    } catch (err) {
+      console.error("Error deleting note:", err);
     }
   };
 
   const filteredNotes = notes.filter((note) => {
-    if (filters.keyword && !note.title.toLowerCase().includes(filters.keyword.toLowerCase())) return false;
+    if (filters.keyword && !note.title.includes(filters.keyword)) return false;
     if (filters.favorite && !note.favorite) return false;
     if (filters.completed && !note.completed) return false;
     return true;
   });
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid gap-4">
       {filteredNotes.length === 0 ? (
-        <p>{lang === "es" ? "No hay notas disponibles." : "No notes available."}</p>
+        <p>{translations[lang].noNotes}</p>
       ) : (
         filteredNotes.map((note) => (
           <div
             key={note.id}
-            className={`${darkMode ? "bg-gray-800" : "bg-white"} p-4 rounded shadow-md`}
+            className={`p-4 rounded shadow ${
+              darkMode ? "bg-gray-700 text-white" : "bg-white text-black"
+            }`}
           >
-            <h3 className="font-bold text-lg">{note.title}</h3>
-            <p className="text-sm">{note.content}</p>
-            <div className="flex justify-between mt-2">
+            <h2 className="font-bold">{note.title}</h2>
+            <p className="mb-2">{note.content}</p>
+            <div className="flex gap-2">
               <button
                 onClick={() => setNoteToEdit(note)}
-                className="text-blue-500 font-semibold cursor-pointer"
+                className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-2 py-1 rounded cursor-pointer"
               >
-                {lang === "es" ? "Editar" : "Edit"}
+                {translations[lang].edit}
               </button>
               <button
                 onClick={() => handleDelete(note.id)}
-                className="text-red-500 font-semibold cursor-pointer"
+                className="bg-red-500 hover:bg-red-600 text-white font-semibold px-2 py-1 rounded cursor-pointer"
               >
-                {lang === "es" ? "Eliminar" : "Delete"}
+                {translations[lang].delete}
               </button>
             </div>
           </div>
