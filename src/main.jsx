@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
 import AppRoutes from "./AppRoutes";
 import "./index.css";
 import { LangContext, ThemeContext } from "./contexts";
+// import { HashRouter } from "react-router-dom";
 
 function Root() {
   const [lang, setLang] = useState("es");
@@ -15,9 +15,9 @@ function Root() {
   return (
     <LangContext.Provider value={{ lang, toggleLang }}>
       <ThemeContext.Provider value={{ darkMode, toggleTheme }}>
-        <HashRouter>
+        {/* <HashRouter> */}
           <AppRoutes />
-        </HashRouter>
+        {/* </HashRouter> */ }
       </ThemeContext.Provider>
     </LangContext.Provider>
   );
