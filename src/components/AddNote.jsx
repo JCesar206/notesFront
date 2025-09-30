@@ -15,18 +15,23 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
   const t = {
-    es: { title: "Título", content: "Contenido", category: "Categoría", favorite: "Favorita", completed: "Completada", add: "Agregar", update: "Actualizar", clear: "Limpiar", notAuth: "Usuario no autenticado", errorSave: "Error al guardar nota" },
-    en: { title: "Title", content: "Content", category: "Category", favorite: "Favorite", completed: "Completed", add: "Add", update: "Update", clear: "Clear", notAuth: "User not authenticated", errorSave: "Error saving note" }
+    es: { title: "Título", content: "Contenido", category: "Categoría", favorite: "Favorita", completed: "Completada", add: "Agregar", update: "Actualizar", clear: "Limpiar" },
+    en: { title: "Title", content: "Content", category: "Category", favorite: "Favorite", completed: "Completed", add: "Add", update: "Update", clear: "Clear" }
   }[lang];
 
   const handleClear = () => {
-    setTitle(""); setContent(""); setCategory(""); setFavorite(false); setCompleted(false); setError(""); setNoteToEdit(null); document.getElementById("titleInput").focus();
+    setTitle(""); setContent(""); setCategory(""); setFavorite(false); setCompleted(false); setError(""); setNoteToEdit(null);
+    document.getElementById("titleInput")?.focus();
   };
 
   const handleEmojiClick = (event, emojiObject) => { setContent(prev => prev + emojiObject.emoji); setShowEmoji(false); };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); setError(""); const token = localStorage.getItem("token"); if (!token) { setError(t.notAuth); return; }
+    e.preventDefault();
+    setError("");
+    const token = localStorage.getItem("token");
+    if (!token) { setError(lang === "es" ? "Usuario no autenticado" : "User not authenticated"); return; }
+
     try {
       if (noteToEdit) {
         await axios.put(`${BASE_URL}/notes/${noteToEdit.id}`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
@@ -34,7 +39,7 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
         await axios.post(`${BASE_URL}/notes`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
       }
       handleClear(); fetchNotes();
-    } catch (err) { setError(err.response?.data?.error || t.errorSave); }
+    } catch (err) { setError(err.response?.data?.error || (lang==="es" ? "Error al guardar nota" : "Error saving note")); }
   };
 
   return (
@@ -46,12 +51,12 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
       <div className="flex items-center gap-2">
         <label className="flex items-center gap-1"><input type="checkbox" checked={favorite} onChange={() => setFavorite(!favorite)} /> {t.favorite}</label>
         <label className="flex items-center gap-1"><input type="checkbox" checked={completed} onChange={() => setCompleted(!completed)} /> {t.completed}</label>
-        <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="text-yellow-400"><FaRegSmile /></button>
+        <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="text-yellow-400 cursor-pointer"><FaRegSmile /></button>
       </div>
       {showEmoji && <Picker onEmojiClick={handleEmojiClick} />}
       <div className="flex gap-2">
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">{noteToEdit ? t.update : t.add}</button>
-        <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded">{t.clear}</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded cursor-pointer">{noteToEdit ? t.update : t.add}</button>
+        <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded cursor-pointer">{t.clear}</button>
       </div>
     </form>
   );

@@ -7,10 +7,7 @@ const BASE_URL = "https://notesback-7rae.onrender.com/api";
 function NotesList({ notes, fetchNotes, filters, setNoteToEdit, lang }) {
   const token = localStorage.getItem("token");
 
-  const t = {
-    es: { favorite: "Favorita", completed: "Completada" },
-    en: { favorite: "Favorite", completed: "Completed" }
-  }[lang];
+  const t = { es: { favorite: "Favorita", completed: "Completada" }, en: { favorite: "Favorite", completed: "Completed" } }[lang];
 
   const filtered = notes.filter(note => {
     const matchesKeyword = note.title.toLowerCase().includes(filters.keyword.toLowerCase()) || note.content.toLowerCase().includes(filters.keyword.toLowerCase());
@@ -33,10 +30,10 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit, lang }) {
             <p className="text-sm text-gray-500 dark:text-gray-400">{note.category}</p>
           </div>
           <div className="flex flex-col gap-1">
-            <button onClick={() => toggleFavorite(note)} className="flex items-center gap-1">{note.favorite ? <FaStar className="text-yellow-400" /> : <FaStar />}</button>
-            <button onClick={() => toggleCompleted(note)} className="flex items-center gap-1">{note.completed ? <FaCheck className="text-green-500" /> : <FaCheck />}</button>
-            <button onClick={() => setNoteToEdit(note)} className="flex items-center gap-1 text-blue-500"><FaEdit /></button>
-            <button onClick={() => handleDelete(note.id)} className="flex items-center gap-1 text-red-500"><FaTrash /></button>
+            <button onClick={() => toggleFavorite(note)} className="flex items-center gap-1 cursor-pointer">{note.favorite ? <FaStar className="text-yellow-400" /> : <FaStar />}</button>
+            <button onClick={() => toggleCompleted(note)} className="flex items-center gap-1 cursor-pointer">{note.completed ? <FaCheck className="text-green-500" /> : <FaCheck />}</button>
+            <button onClick={() => setNoteToEdit(note)} className="flex items-center gap-1 text-blue-500 cursor-pointer"><FaEdit /></button>
+            <button onClick={() => handleDelete(note.id)} className="flex items-center gap-1 text-red-500 cursor-pointer"><FaTrash /></button>
           </div>
         </div>
       ))}
