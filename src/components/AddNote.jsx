@@ -144,14 +144,14 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
       <div className="flex gap-2">
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded"
+          className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded cursor-pointer"
         >
           {noteToEdit ? t.update : t.add}
         </button>
         <button
           type="button"
           onClick={handleClear}
-          className="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded"
+          className="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded cursor-pointer"
         >
           {t.clear}
         </button>

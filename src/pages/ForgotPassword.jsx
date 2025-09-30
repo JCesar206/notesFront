@@ -50,7 +50,7 @@ function ChangePassword() {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-2 top-2 text-gray-500"
+            className="absolute right-2 top-2 text-gray-500 cursor-pointer"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
@@ -58,7 +58,7 @@ function ChangePassword() {
 
         <button
           type="submit"
-          className="bg-purple-500 hover:bg-purple-600 text-white p-2 rounded"
+          className="bg-purple-500 hover:bg-purple-600 text-white p-2 rounded cursor-pointer"
         >
           Actualizar
         </button>

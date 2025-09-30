@@ -23,7 +23,7 @@ export default function ResetPassword() {
 				className="w-full p-2 mb-2 border rounded"/>
 			<input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)}
 				placeholder="Nuevo Password" className="w-full p-2 mb-2 border rounded"/>
-			<button className="bg-red-500 text-white px-4 py-2 rounded">Reset</button>
+			<button className="bg-red-500 text-white px-4 py-2 rounded cursor-pointer">Reset</button>
 		</form>
 	);
 }

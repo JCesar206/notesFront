@@ -51,20 +51,20 @@ function Login({ setIsAuth }) {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-2 top-2 text-gray-500"
+            className="absolute right-2 top-2 text-gray-500 cursor-pointer"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
 
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded cursor-pointer">
           Entrar
         </button>
         <div className="flex justify-between text-sm">
-          <Link to="/register" className="text-blue-500 hover:underline">
+          <Link to="/register" className="text-blue-500 hover:underline font-semibold">
             Registrarse
           </Link>
-          <Link to="/change-password" className="text-blue-500 hover:underline">
+          <Link to="/change-password" className="text-blue-500 hover:underline font-semibold">
             Olvidé contraseña
           </Link>
         </div>

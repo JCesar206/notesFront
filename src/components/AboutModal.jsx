@@ -45,7 +45,7 @@ function AboutModal({ close }) {
         {/* Botón cerrar */}
         <button
           onClick={close}
-          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg shadow-md"
+          className="px-4 py-2 bg-blue-400 hover:bg-blue-700 text-white rounded-lg shadow-md cursor-pointer"
         >
           {t.close}
         </button>

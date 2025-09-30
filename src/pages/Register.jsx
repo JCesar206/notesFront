@@ -49,17 +49,17 @@ function Register() {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-2 top-2 text-gray-500"
+            className="absolute right-2 top-2 text-gray-500 cursor-pointer"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
 
-        <button type="submit" className="bg-green-500 hover:bg-green-600 text-white p-2 rounded">
+        <button type="submit" className="bg-green-500 hover:bg-green-600 text-white p-2 rounded cursor-pointer">
           Registrar
         </button>
         <div className="text-sm">
-          <Link to="/login" className="text-blue-500 hover:underline">
+          <Link to="/login" className="text-blue-500 hover:underline font-semibold">
             Ya tengo cuenta
           </Link>
         </div>
