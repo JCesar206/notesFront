@@ -1,63 +1,97 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import { FaRegSmile } from "react-icons/fa";
-import Picker from "emoji-picker-react";
+import { LangContext, ThemeContext } from "../App";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
-function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
-  const [title, setTitle] = useState(noteToEdit?.title || "");
-  const [content, setContent] = useState(noteToEdit?.content || "");
-  const [category, setCategory] = useState(noteToEdit?.category || "");
-  const [favorite, setFavorite] = useState(noteToEdit?.favorite || false);
-  const [completed, setCompleted] = useState(noteToEdit?.completed || false);
-  const [error, setError] = useState("");
-  const [showEmoji, setShowEmoji] = useState(false);
+function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
+  const { lang } = useContext(LangContext);
+  const { darkMode } = useContext(ThemeContext);
 
-  const t = {
-    es: { title: "Título", content: "Contenido", category: "Categoría", favorite: "Favorita", completed: "Completada", add: "Agregar", update: "Actualizar", clear: "Limpiar" },
-    en: { title: "Title", content: "Content", category: "Category", favorite: "Favorite", completed: "Completed", add: "Add", update: "Update", clear: "Clear" }
-  }[lang];
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [favorite, setFavorite] = useState(false);
 
-  const handleClear = () => {
-    setTitle(""); setContent(""); setCategory(""); setFavorite(false); setCompleted(false); setError(""); setNoteToEdit(null);
-    document.getElementById("titleInput")?.focus();
-  };
-
-  const handleEmojiClick = (event, emojiObject) => { setContent(prev => prev + emojiObject.emoji); setShowEmoji(false); };
+  useEffect(() => {
+    if (noteToEdit) {
+      setTitle(noteToEdit.title);
+      setContent(noteToEdit.content);
+      setFavorite(noteToEdit.favorite);
+    }
+  }, [noteToEdit]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     const token = localStorage.getItem("token");
-    if (!token) { setError(lang === "es" ? "Usuario no autenticado" : "User not authenticated"); return; }
+    if (!token) return;
 
     try {
       if (noteToEdit) {
-        await axios.put(`${BASE_URL}/notes/${noteToEdit.id}`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.put(
+          `${BASE_URL}/notes/${noteToEdit.id}`,
+          { title, content, favorite },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       } else {
-        await axios.post(`${BASE_URL}/notes`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(
+          `${BASE_URL}/notes`,
+          { title, content, favorite },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       }
-      handleClear(); fetchNotes();
-    } catch (err) { setError(err.response?.data?.error || (lang==="es" ? "Error al guardar nota" : "Error saving note")); }
+      fetchNotes();
+      setTitle("");
+      setContent("");
+      setFavorite(false);
+      setNoteToEdit(null);
+    } catch (error) {
+      console.error("Error saving note:", error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-4 rounded shadow flex flex-col gap-2">
-      {error && <div className="text-red-500">{error}</div>}
-      <input id="titleInput" type="text" placeholder={t.title} value={title} onChange={e => setTitle(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
-      <textarea placeholder={t.content} value={content} onChange={e => setContent(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
-      <input type="text" placeholder={t.category} value={category} onChange={e => setCategory(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
-      <div className="flex items-center gap-2">
-        <label className="flex items-center gap-1"><input type="checkbox" checked={favorite} onChange={() => setFavorite(!favorite)} /> {t.favorite}</label>
-        <label className="flex items-center gap-1"><input type="checkbox" checked={completed} onChange={() => setCompleted(!completed)} /> {t.completed}</label>
-        <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="text-yellow-400 cursor-pointer"><FaRegSmile /></button>
-      </div>
-      {showEmoji && <Picker onEmojiClick={handleEmojiClick} />}
-      <div className="flex gap-2">
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded cursor-pointer">{noteToEdit ? t.update : t.add}</button>
-        <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded cursor-pointer">{t.clear}</button>
-      </div>
+    <form
+      onSubmit={handleSubmit}
+      className={`${darkMode ? "bg-gray-800" : "bg-white"} p-4 rounded shadow-md flex flex-col gap-3`}
+    >
+      <input
+        type="text"
+        placeholder={lang === "es" ? "Título" : "Title"}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+        className="p-2 rounded border dark:bg-gray-700 cursor-text"
+      />
+
+      <textarea
+        placeholder={lang === "es" ? "Contenido" : "Content"}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        required
+        className="p-2 rounded border dark:bg-gray-700 cursor-text"
+      />
+
+      <label className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          checked={favorite}
+          onChange={(e) => setFavorite(e.target.checked)}
+        />
+        {lang === "es" ? "Favorito" : "Favorite"}
+      </label>
+
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-600 text-white rounded p-2 cursor-pointer"
+      >
+        {noteToEdit
+          ? lang === "es"
+            ? "Actualizar Nota"
+            : "Update Note"
+          : lang === "es"
+            ? "Agregar Nota"
+            : "Add Note"}
+      </button>
     </form>
   );
 }

@@ -1,26 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { LangContext, ThemeContext } from "../App";
 
-function ForgotPassword({ lang }) {
+function ForgotPassword() {
+  const { lang } = useContext(LangContext);
+  const { darkMode } = useContext(ThemeContext);
+
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-
-  const t = {
-    es: { email: "Correo", send: "Enviar enlace", message: "Si existe, recibirás un correo para recuperar tu cuenta." },
-    en: { email: "Email", send: "Send link", message: "If it exists, you’ll receive an email to recover your account." },
-  }[lang];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setMessage(t.message);
+    // Aquí solo simulamos el envío (en el backend real habría un endpoint)
+    alert(lang === "es" ? "Si el correo existe recibirás instrucciones." : "If the email exists, you'll receive instructions.");
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100 dark:bg-gray-900">
-      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-6 rounded shadow w-80 flex flex-col gap-3">
-        <h2 className="text-xl font-bold text-center">Forgot Password</h2>
-        {message && <div className="text-green-500">{message}</div>}
-        <input type="email" placeholder={t.email} value={email} onChange={e => setEmail(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" required />
-        <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded cursor-pointer">{t.send}</button>
+    <div className={`${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"} flex items-center justify-center min-h-screen`}>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 w-96"
+      >
+        <h2 className="text-xl font-bold mb-4 text-center">
+          {lang === "es" ? "Recuperar Contraseña" : "Forgot Password"}
+        </h2>
+
+        <label className="block mb-2">{lang === "es" ? "Correo electrónico" : "Email"}</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full p-2 rounded border mb-4 dark:bg-gray-700"
+        />
+
+        <button
+          type="submit"
+          className="w-full bg-purple-500 hover:bg-purple-600 text-white rounded p-2 cursor-pointer"
+        >
+          {lang === "es" ? "Enviar enlace" : "Send link"}
+        </button>
       </form>
     </div>
   );
