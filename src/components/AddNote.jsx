@@ -71,7 +71,7 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
         className="p-2 rounded border dark:bg-gray-700 cursor-text"
       />
 
-      <label className="flex items-center gap-2">
+      <label className="flex items-center gap-2 cursor-pointer">
         <input
           type="checkbox"
           checked={favorite}
@@ -82,7 +82,7 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
 
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white rounded p-2 cursor-pointer"
+        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded p-2 cursor-pointer"
       >
         {noteToEdit
           ? lang === "es"

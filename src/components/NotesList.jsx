@@ -44,13 +44,13 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
             <div className="flex justify-between mt-2">
               <button
                 onClick={() => setNoteToEdit(note)}
-                className="text-blue-500 cursor-pointer"
+                className="text-blue-500 font-semibold cursor-pointer"
               >
                 {lang === "es" ? "Editar" : "Edit"}
               </button>
               <button
                 onClick={() => handleDelete(note.id)}
-                className="text-red-500 cursor-pointer"
+                className="text-red-500 font-semibold cursor-pointer"
               >
                 {lang === "es" ? "Eliminar" : "Delete"}
               </button>

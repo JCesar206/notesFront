@@ -60,7 +60,7 @@ function Login({ setIsAuth }) {
           />
           <button
             type="button"
-            className="absolute right-2 top-2 text-gray-600 dark:text-gray-300 cursor-pointer"
+            className="absolute right-2 top-2 text-gray-600 dark:text-gray-300 font-semibold cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
@@ -69,14 +69,14 @@ function Login({ setIsAuth }) {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white rounded p-2 mb-2 cursor-pointer"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded p-2 mb-2 cursor-pointer"
         >
           {lang === "es" ? "Entrar" : "Login"}
         </button>
 
         <p
           onClick={() => navigate("/register")}
-          className="text-blue-500 cursor-pointer text-sm mb-1"
+          className="text-blue-500 text-sm font-semibold mb-1"
         >
           {lang === "es" ? "Crear cuenta" : "Create account"}
         </p>

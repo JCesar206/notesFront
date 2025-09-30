@@ -36,7 +36,7 @@ function Navbar({ filters, setFilters, openAbout }) {
           {darkMode ? "☀️" : "🌙"}
         </button>
 
-        <button onClick={openAbout} className="px-2 py-1 border rounded">
+        <button onClick={openAbout} className="px-2 py-1 border rounded cursor-pointer">
           {lang === "es" ? "Acerca de" : "About"}
         </button>
       </div>

@@ -34,7 +34,7 @@ function ForgotPassword() {
 
         <button
           type="submit"
-          className="w-full bg-purple-500 hover:bg-purple-600 text-white rounded p-2 cursor-pointer"
+          className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded p-2 cursor-pointer"
         >
           {lang === "es" ? "Enviar enlace" : "Send link"}
         </button>

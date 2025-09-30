@@ -39,7 +39,7 @@ function Register({ setIsAuth }) {
           {lang === "es" ? "Crear Cuenta" : "Register"}
         </h2>
 
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+        {error && <p className="text-red-500 text-sm font-semibold mb-2">{error}</p>}
 
         <label className="block mb-2">{lang === "es" ? "Correo electrónico" : "Email"}</label>
         <input
@@ -61,7 +61,7 @@ function Register({ setIsAuth }) {
           />
           <button
             type="button"
-            className="absolute right-2 top-2 text-gray-600 dark:text-gray-300"
+            className="absolute right-2 top-2 text-gray-600 dark:text-gray-300 cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
