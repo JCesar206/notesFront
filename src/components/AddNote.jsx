@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import api from "../api";
+import axios from "axios";
 import { FaRegSmile } from "react-icons/fa";
-import Picker from "emoji-picker-react";
+import Picker from "emoji-picker-react"; // npm install emoji-picker-react
+
+const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
 function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
   const [title, setTitle] = useState(noteToEdit?.title || "");
@@ -13,13 +15,40 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
   const [showEmoji, setShowEmoji] = useState(false);
 
   const t = {
-    es: { title: "Título", content: "Contenido", category: "Categoría", favorite: "Favorita", completed: "Completada", add: "Agregar", update: "Actualizar", clear: "Limpiar" },
-    en: { title: "Title", content: "Content", category: "Category", favorite: "Favorite", completed: "Completed", add: "Add", update: "Update", clear: "Clear" }
+    es: {
+      title: "Título",
+      content: "Contenido",
+      category: "Categoría",
+      favorite: "Favorita",
+      completed: "Completada",
+      add: "Agregar",
+      update: "Actualizar",
+      clear: "Limpiar",
+      notAuth: "Usuario no autenticado",
+      errorSave: "Error al guardar nota"
+    },
+    en: {
+      title: "Title",
+      content: "Content",
+      category: "Category",
+      favorite: "Favorite",
+      completed: "Completed",
+      add: "Add",
+      update: "Update",
+      clear: "Clear",
+      notAuth: "User not authenticated",
+      errorSave: "Error saving note"
+    }
   }[lang];
 
   const handleClear = () => {
-    setTitle(""); setContent(""); setCategory(""); setFavorite(false); setCompleted(false);
-    setError(""); setNoteToEdit(null);
+    setTitle("");
+    setContent("");
+    setCategory("");
+    setFavorite(false);
+    setCompleted(false);
+    setError("");
+    setNoteToEdit(null);
     document.getElementById("titleInput").focus();
   };
 
@@ -32,30 +61,34 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
     e.preventDefault();
     setError("");
     const token = localStorage.getItem("token");
-    if (!token) { setError("Not authenticated"); return; }
+    if (!token) { setError(t.notAuth); return; }
 
     try {
       if (noteToEdit) {
-        await api.put(`/notes/${noteToEdit.id}`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.put(`${BASE_URL}/notes/${noteToEdit.id}`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
       } else {
-        await api.post("/notes", { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(`${BASE_URL}/notes`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
       }
       handleClear();
       fetchNotes();
     } catch (err) {
-      setError(err.response?.data?.error || "Error saving note");
+      setError(err.response?.data?.error || t.errorSave);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-4 rounded shadow flex flex-col gap-2">
       {error && <div className="text-red-500">{error}</div>}
-      <input id="titleInput" type="text" placeholder={t.title} value={title} onChange={e => setTitle(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
-      <textarea placeholder={t.content} value={content} onChange={e => setContent(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
-      <input type="text" placeholder={t.category} value={category} onChange={e => setCategory(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
+      <input id="titleInput" type="text" placeholder={t.title} value={title} onChange={e => setTitle(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
+      <textarea placeholder={t.content} value={content} onChange={e => setContent(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
+      <input type="text" placeholder={t.category} value={category} onChange={e => setCategory(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
       <div className="flex items-center gap-2">
-        <label><input type="checkbox" checked={favorite} onChange={() => setFavorite(!favorite)} /> {t.favorite}</label>
-        <label><input type="checkbox" checked={completed} onChange={() => setCompleted(!completed)} /> {t.completed}</label>
+        <label className="flex items-center gap-1">
+          <input type="checkbox" checked={favorite} onChange={() => setFavorite(!favorite)} /> {t.favorite}
+        </label>
+        <label className="flex items-center gap-1">
+          <input type="checkbox" checked={completed} onChange={() => setCompleted(!completed)} /> {t.completed}
+        </label>
         <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="text-yellow-400 cursor-pointer"><FaRegSmile /></button>
       </div>
       {showEmoji && <Picker onEmojiClick={handleEmojiClick} />}

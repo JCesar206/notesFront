@@ -1,84 +1,66 @@
-import React, { useState, useEffect, createContext } from "react";
-import Navbar from "./components/Navbar";
-import NotesList from "./components/NotesList";
-import AddNote from "./components/AddNote";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ChangePassword from "./pages/ChangePassword";
-import api from "./api";
-import Footer from "./components/Footer";
-import "./App.css";
+import React, { useState, createContext, useEffect } from 'react';
+import Navbar from './components/Navbar';
+import AddNote from './components/AddNote';
+import NotesList from './components/NotesList';
+import AboutModal from './components/AboutModal';
+import Footer from './components/Footer';
+import axios from 'axios';
+import './App.css';
 
 export const LangContext = createContext();
 export const ThemeContext = createContext();
 
-function App() {
-  // Context states
-  const [lang, setLang] = useState("es"); // "es" o "en"
+const BASE_URL = "https://notesback-7rae.onrender.com/api";
+
+function App({ setIsAuth }) {
+  const [lang, setLang] = useState('es');
   const [darkMode, setDarkMode] = useState(false);
-
-  const toggleLang = () => setLang(prev => (prev === "es" ? "en" : "es"));
-  const toggleTheme = () => setDarkMode(prev => !prev);
-
-  // Authentication
-  const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
-  const [page, setPage] = useState("login"); // "login", "register", "changePassword", "app"
-
-  useEffect(() => {
-    if (isAuth) setPage("app");
-    else setPage("login");
-  }, [isAuth]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsAuth(false);
-    setPage("login");
-  };
-
-  // Notes
   const [notes, setNotes] = useState([]);
-  const [filters, setFilters] = useState({ keyword: "", favorite: false, completed: false });
+  const [filters, setFilters] = useState({
+    keyword: '',
+    favorite: false,
+    completed: false
+  });
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [noteToEdit, setNoteToEdit] = useState(null);
+
+  const toggleLang = () => setLang(lang === 'es' ? 'en' : 'es');
+  const toggleTheme = () => setDarkMode(!darkMode);
 
   const fetchNotes = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
+
     try {
-      const res = await api.get("/notes", { headers: { Authorization: `Bearer ${token}` } });
+      const res = await axios.get(`${BASE_URL}/notes`, { headers: { Authorization: `Bearer ${token}` } });
       setNotes(res.data);
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error('Error fetching notes:', error);
     }
   };
 
   useEffect(() => {
-    if (isAuth) fetchNotes();
-  }, [isAuth]);
-
-  // Translation
-  const t = {
-    es: { login: "Iniciar sesión", register: "Registrar", changePassword: "Cambiar contraseña" },
-    en: { login: "Login", register: "Register", changePassword: "Change Password" }
-  }[lang];
+    fetchNotes();
+  }, []);
 
   return (
     <LangContext.Provider value={{ lang, toggleLang }}>
       <ThemeContext.Provider value={{ darkMode, toggleTheme }}>
-        <div className={darkMode ? "dark bg-gray-900 min-h-screen text-white" : "bg-gray-100 min-h-screen text-black"}>
-          <Navbar filters={filters} setFilters={setFilters} openAbout={() => {}} logout={handleLogout} />
-          <div className="container mx-auto p-4">
-            {!isAuth && page === "login" && <Login setIsAuth={setIsAuth} />}
-            {!isAuth && page === "register" && <Register setIsAuth={setIsAuth} />}
-            {!isAuth && page === "changePassword" && <ChangePassword />}
-            {isAuth && page === "app" && (
-              <>
-                <AddNote fetchNotes={fetchNotes} noteToEdit={noteToEdit} setNoteToEdit={setNoteToEdit} lang={lang} />
-                <NotesList notes={notes} fetchNotes={fetchNotes} filters={filters} setNoteToEdit={setNoteToEdit} />
-              </>
-            )}
+        <div className={`${darkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-100 text-black'} min-h-screen`}>
+          <Navbar
+            filters={filters}
+            setFilters={setFilters}
+            openAbout={() => setAboutOpen(true)}
+          />
+
+          <div className="container mx-auto p-4 flex flex-col gap-4">
+            <AddNote fetchNotes={fetchNotes} noteToEdit={noteToEdit} setNoteToEdit={setNoteToEdit} lang={lang} />
+            <NotesList notes={notes} fetchNotes={fetchNotes} filters={filters} setNoteToEdit={setNoteToEdit} lang={lang} />
           </div>
-          <Footer />
+
+          {aboutOpen && <AboutModal close={() => setAboutOpen(false)} />}
         </div>
+        <Footer />
       </ThemeContext.Provider>
     </LangContext.Provider>
   );

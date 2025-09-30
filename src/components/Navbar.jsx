@@ -62,7 +62,7 @@ function Navbar({ filters, setFilters, openAbout, logout }) {
             <button
               key={i}
               onClick={item.action}
-              className={`flex items-center gap-1 hover:underline ${
+              className={`flex items-center gap-1 hover:underline cursor-pointer ${
                 item.active ? "text-blue-500" : ""
               }`}
             >
@@ -72,7 +72,7 @@ function Navbar({ filters, setFilters, openAbout, logout }) {
         </div>
 
         {/* Botón hamburguesa Mobile */}
-        <div className="md:hidden cursor-pointer">
+        <div className="md:hidden">
           <button onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
@@ -89,7 +89,7 @@ function Navbar({ filters, setFilters, openAbout, logout }) {
                 if (item.action) item.action();
                 setMenuOpen(false);
               }}
-              className={`flex font-semibold items-center gap-2 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
+              className={`flex font-semibold items-center gap-2 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer ${
                 item.active ? "bg-blue-200 dark:bg-blue-600" : ""
               }`}
             >
