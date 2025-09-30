@@ -1,19 +1,19 @@
-import React, { useState, createContext, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect, useContext } from "react";
 import Navbar from "./components/Navbar";
 import AddNote from "./components/AddNote";
 import NotesList from "./components/NotesList";
 import AboutModal from "./components/AboutModal";
 import Footer from "./components/Footer";
-
-export const LangContext = createContext();
-export const ThemeContext = createContext();
+import axios from "axios";
+import "./App.css";
+import { LangContext, ThemeContext } from "./contexts";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
-function App() {
-  const [lang, setLang] = useState("es");
-  const [darkMode, setDarkMode] = useState(false);
+function App({ setIsAuth }) {
+  const { lang } = useContext(LangContext);
+  const { darkMode } = useContext(ThemeContext);
+
   const [notes, setNotes] = useState([]);
   const [filters, setFilters] = useState({
     keyword: "",
@@ -22,9 +22,6 @@ function App() {
   });
   const [aboutOpen, setAboutOpen] = useState(false);
   const [noteToEdit, setNoteToEdit] = useState(null);
-
-  const toggleLang = () => setLang((prev) => (prev === "es" ? "en" : "es"));
-  const toggleTheme = () => setDarkMode((prev) => !prev);
 
   const fetchNotes = async () => {
     const token = localStorage.getItem("token");
@@ -44,38 +41,19 @@ function App() {
   }, []);
 
   return (
-    <LangContext.Provider value={{ lang, toggleLang }}>
-      <ThemeContext.Provider value={{ darkMode, toggleTheme }}>
-        <div
-          className={`${
-            darkMode ? "dark bg-gray-900 text-white" : "bg-gray-100 text-black"
-          } min-h-screen flex flex-col`}
-        >
-          <Navbar
-            filters={filters}
-            setFilters={setFilters}
-            openAbout={() => setAboutOpen(true)}
-          />
-
-          <main className="container mx-auto p-4 flex flex-col gap-4 flex-grow">
-            <AddNote
-              fetchNotes={fetchNotes}
-              noteToEdit={noteToEdit}
-              setNoteToEdit={setNoteToEdit}
-            />
-            <NotesList
-              notes={notes}
-              fetchNotes={fetchNotes}
-              filters={filters}
-              setNoteToEdit={setNoteToEdit}
-            />
-          </main>
-
-          {aboutOpen && <AboutModal close={() => setAboutOpen(false)} />}
-          <Footer />
-        </div>
-      </ThemeContext.Provider>
-    </LangContext.Provider>
+    <div
+      className={`${
+        darkMode ? "dark bg-gray-900 text-white" : "bg-gray-100 text-black"
+      } min-h-screen`}
+    >
+      <Navbar filters={filters} setFilters={setFilters} openAbout={() => setAboutOpen(true)} />
+      <div className="container mx-auto p-4 flex flex-col gap-4">
+        <AddNote fetchNotes={fetchNotes} noteToEdit={noteToEdit} setNoteToEdit={setNoteToEdit} lang={lang} />
+        <NotesList notes={notes} fetchNotes={fetchNotes} filters={filters} setNoteToEdit={setNoteToEdit} lang={lang} />
+      </div>
+      {aboutOpen && <AboutModal close={() => setAboutOpen(false)} />}
+      <Footer />
+    </div>
   );
 }
 

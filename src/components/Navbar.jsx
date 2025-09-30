@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { LangContext, ThemeContext } from "../App";
+import { LangContext, ThemeContext } from "../contexts";
 
 function Navbar({ filters, setFilters, openAbout }) {
   const { lang, toggleLang } = useContext(LangContext);

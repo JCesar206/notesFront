@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import axios from "axios";
-import { LangContext, ThemeContext } from "../App";
+import { LangContext, ThemeContext } from "../contexts";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 

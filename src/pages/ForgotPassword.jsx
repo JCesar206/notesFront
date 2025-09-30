@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { LangContext, ThemeContext } from "../App";
+import { LangContext, ThemeContext } from "../contexts";
 import { useNavigate } from "react-router-dom";
 
 function ForgotPassword() {
