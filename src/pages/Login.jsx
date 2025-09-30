@@ -86,10 +86,10 @@ function Login({ setIsAuth }) {
         </button>
 
         <div className="flex justify-between text-sm">
-          <button type="button" onClick={() => navigate("/register")} className="text-blue-500 hover:underline font-semibold">
+          <button type="button" onClick={() => navigate("/register")} className="text-blue-500 hover:underline font-semibold cursor-pointer">
             {translations[lang].register}
           </button>
-          <button type="button" onClick={() => navigate("/forgot-password")} className="text-blue-500 hover:underline font-semibold">
+          <button type="button" onClick={() => navigate("/forgot-password")} className="text-blue-500 hover:underline font-semibold cursor-pointer">
             {translations[lang].forgot}
           </button>
         </div>
