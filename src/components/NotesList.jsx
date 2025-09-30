@@ -35,7 +35,7 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
   const handleDelete = async (id) => {
     if (!token) return;
     try {
-      await axios.delete(`http://localhost:5000/api/notes/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`https://notesback-7rae.onrender.com/api/notes/${id}`, { headers: { Authorization: `Bearer ${token}` } });
       fetchNotes();
     } catch (err) { console.error(err); }
   };
@@ -43,7 +43,7 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
   const toggleFavorite = async (note) => {
     if (!token) return;
     try {
-      await axios.put(`http://localhost:5000/api/notes/${note.id}`, { ...note, favorite: !note.favorite }, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.put(`https://notesback-7rae.onrender.com/api/notes/${note.id}`, { ...note, favorite: !note.favorite }, { headers: { Authorization: `Bearer ${token}` } });
       fetchNotes();
     } catch (err) { console.error(err); }
   };
@@ -51,7 +51,7 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
   const toggleCompleted = async (note) => {
     if (!token) return;
     try {
-      await axios.put(`http://localhost:5000/api/notes/${note.id}`, { ...note, completed: !note.completed }, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.put(`https://notesback-7rae.onrender.com/api/notes/${note.id}`, { ...note, completed: !note.completed }, { headers: { Authorization: `Bearer ${token}` } });
       fetchNotes();
     } catch (err) { console.error(err); }
   };

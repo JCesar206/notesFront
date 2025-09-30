@@ -70,13 +70,13 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
     try {
       if (noteToEdit) {
         await axios.put(
-          `https://notesback-tb4o.onrender.com/api/notes/${noteToEdit.id}`,
+          `https://notesback-7rae.onrender.com/api/notes/${noteToEdit.id}`,
           { title, content, category, favorite, completed },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         await axios.post(
-          "https://notesback-tb4o.onrender.com/api/notes",
+          "https://notesback-7rae.onrender.com/api/notes",
           { title, content, category, favorite, completed },
           { headers: { Authorization: `Bearer ${token}` } }
         );
