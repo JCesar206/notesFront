@@ -1,13 +1,13 @@
-import React from "react"; // Render principal...
+import React from "react";
 import ReactDOM from "react-dom/client";
-import AppRoutes from "./AppRoutes";
-import "./index.css";
 import { HashRouter } from "react-router-dom";
+import AppRoutes from "./AppRoutes"; // tus rutas
+import "./index.css"; // estilos globales
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <HashRouter> {/* BrowserRouter */}
+    <HashRouter>
       <AppRoutes />
     </HashRouter>
   </React.StrictMode>

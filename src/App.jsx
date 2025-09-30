@@ -30,7 +30,6 @@ function App({ setIsAuth }) {
   const fetchNotes = async () => {
     const token = localStorage.getItem("token");
     if (!token) return;
-
     try {
       const res = await axios.get(`${BASE_URL}/notes`, { headers: { Authorization: `Bearer ${token}` } });
       setNotes(res.data);
@@ -52,12 +51,10 @@ function App({ setIsAuth }) {
             setFilters={setFilters}
             openAbout={() => setAboutOpen(true)}
           />
-
           <div className="container mx-auto p-4 flex flex-col gap-4">
             <AddNote fetchNotes={fetchNotes} noteToEdit={noteToEdit} setNoteToEdit={setNoteToEdit} lang={lang} />
             <NotesList notes={notes} fetchNotes={fetchNotes} filters={filters} setNoteToEdit={setNoteToEdit} lang={lang} />
           </div>
-
           {aboutOpen && <AboutModal close={() => setAboutOpen(false)} />}
         </div>
         <Footer />
