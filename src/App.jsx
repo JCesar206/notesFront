@@ -16,7 +16,11 @@ function App({ setIsAuth }) {
   const [lang, setLang] = useState("es");
   const [darkMode, setDarkMode] = useState(false);
   const [notes, setNotes] = useState([]);
-  const [filters, setFilters] = useState({ keyword: "", favorite: false, completed: false });
+  const [filters, setFilters] = useState({
+    keyword: "",
+    favorite: false,
+    completed: false,
+  });
   const [aboutOpen, setAboutOpen] = useState(false);
   const [noteToEdit, setNoteToEdit] = useState(null);
 
@@ -27,7 +31,9 @@ function App({ setIsAuth }) {
     const token = localStorage.getItem("token");
     if (!token) return;
     try {
-      const res = await axios.get(`${BASE_URL}/notes`, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await axios.get(`${BASE_URL}/notes`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setNotes(res.data);
     } catch (error) {
       console.error("Error fetching notes:", error);
@@ -41,7 +47,11 @@ function App({ setIsAuth }) {
   return (
     <LangContext.Provider value={{ lang, toggleLang }}>
       <ThemeContext.Provider value={{ darkMode, toggleTheme }}>
-        <div className={`${darkMode ? "dark bg-gray-900 text-white" : "bg-gray-100 text-black"} min-h-screen`}>
+        <div
+          className={`${
+            darkMode ? "dark bg-gray-900 text-white" : "bg-gray-100 text-black"
+          } min-h-screen`}
+        >
           <Navbar filters={filters} setFilters={setFilters} openAbout={() => setAboutOpen(true)} />
           <div className="container mx-auto p-4 flex flex-col gap-4">
             <AddNote fetchNotes={fetchNotes} noteToEdit={noteToEdit} setNoteToEdit={setNoteToEdit} lang={lang} />

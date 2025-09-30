@@ -7,7 +7,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 
 function AppRoutes() {
   const [isAuth, setIsAuth] = useState(false);
-  const [lang, setLang] = useState("es");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -19,11 +18,23 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Navigate to={isAuth ? "/app" : "/login"} />} />
 
-        <Route path="/login" element={isAuth ? <Navigate to="/app" /> : <Login setIsAuth={setIsAuth} lang={lang} />} />
-        <Route path="/register" element={isAuth ? <Navigate to="/app" /> : <Register setIsAuth={setIsAuth} lang={lang} />} />
-        <Route path="/forgot-password" element={isAuth ? <Navigate to="/app" /> : <ForgotPassword lang={lang} />} />
+        <Route
+          path="/login"
+          element={isAuth ? <Navigate to="/app" /> : <Login setIsAuth={setIsAuth} />}
+        />
+        <Route
+          path="/register"
+          element={isAuth ? <Navigate to="/app" /> : <Register setIsAuth={setIsAuth} />}
+        />
+        <Route
+          path="/forgot-password"
+          element={isAuth ? <Navigate to="/app" /> : <ForgotPassword />}
+        />
 
-        <Route path="/app" element={isAuth ? <App setIsAuth={setIsAuth} /> : <Navigate to="/login" />} />
+        <Route
+          path="/app"
+          element={isAuth ? <App setIsAuth={setIsAuth} /> : <Navigate to="/login" />}
+        />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
