@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { LangContext, ThemeContext } from "../App";
+import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
@@ -14,7 +14,25 @@ function Login({ setIsAuth }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+
+  const translations = {
+    es: {
+      title: "Iniciar Sesión",
+      email: "Correo electrónico",
+      password: "Contraseña",
+      login: "Entrar",
+      register: "Registrarse",
+      forgot: "¿Olvidaste tu contraseña?",
+    },
+    en: {
+      title: "Login",
+      email: "Email",
+      password: "Password",
+      login: "Login",
+      register: "Register",
+      forgot: "Forgot your password?",
+    },
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,68 +42,57 @@ function Login({ setIsAuth }) {
       setIsAuth(true);
       navigate("/app");
     } catch (err) {
-      setError(lang === "es" ? "Credenciales incorrectas" : "Invalid credentials");
+      alert("❌ Error en login");
+      console.error(err);
     }
   };
 
   return (
-    <div className={`${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"} flex items-center justify-center min-h-screen`}>
+    <div className={`flex items-center justify-center min-h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 w-96"
+        className={`p-6 rounded shadow-md w-full max-w-sm ${darkMode ? "bg-gray-800" : "bg-white"}`}
       >
-        <h2 className="text-xl font-bold mb-4 text-center">
-          {lang === "es" ? "Iniciar Sesión" : "Login"}
-        </h2>
+        <h2 className="text-xl font-bold mb-4">{translations[lang].title}</h2>
 
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-
-        <label className="block mb-2">{lang === "es" ? "Correo electrónico" : "Email"}</label>
         <input
           type="email"
+          placeholder={translations[lang].email}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full p-2 rounded border mb-4 dark:bg-gray-700"
+          className="w-full mb-3 p-2 border rounded"
         />
 
-        <label className="block mb-2">{lang === "es" ? "Contraseña" : "Password"}</label>
-        <div className="relative mb-4">
+        <div className="relative mb-3">
           <input
             type={showPassword ? "text" : "password"}
+            placeholder={translations[lang].password}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full p-2 rounded border dark:bg-gray-700"
+            className="w-full p-2 border rounded pr-10"
           />
-          <button
-            type="button"
-            className="absolute right-2 top-2 text-gray-600 dark:text-gray-300 font-semibold cursor-pointer"
+          <span
             onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-2 top-2 cursor-pointer"
           >
             {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
-          </button>
+          </span>
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded p-2 mb-2 cursor-pointer"
-        >
-          {lang === "es" ? "Entrar" : "Login"}
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold w-full py-2 rounded mb-3 cursor-pointer">
+          {translations[lang].login}
         </button>
 
-        <p
-          onClick={() => navigate("/register")}
-          className="text-blue-500 text-sm font-semibold mb-1"
-        >
-          {lang === "es" ? "Crear cuenta" : "Create account"}
-        </p>
-        <p
-          onClick={() => navigate("/forgot-password")}
-          className="text-blue-500 cursor-pointer text-sm"
-        >
-          {lang === "es" ? "¿Olvidaste tu contraseña?" : "Forgot password?"}
-        </p>
+        <div className="flex justify-between text-sm">
+          <button type="button" onClick={() => navigate("/register")} className="text-blue-500 hover:underline font-semibold">
+            {translations[lang].register}
+          </button>
+          <button type="button" onClick={() => navigate("/forgot-password")} className="text-blue-500 hover:underline font-semibold">
+            {translations[lang].forgot}
+          </button>
+        </div>
       </form>
     </div>
   );

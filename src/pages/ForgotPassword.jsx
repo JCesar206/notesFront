@@ -1,42 +1,61 @@
 import React, { useState, useContext } from "react";
 import { LangContext, ThemeContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 function ForgotPassword() {
   const { lang } = useContext(LangContext);
   const { darkMode } = useContext(ThemeContext);
-
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  const translations = {
+    es: {
+      title: "Recuperar Contraseña",
+      email: "Correo electrónico",
+      send: "Enviar enlace",
+      back: "Volver al login",
+    },
+    en: {
+      title: "Forgot Password",
+      email: "Email",
+      send: "Send link",
+      back: "Back to login",
+    },
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí solo simulamos el envío (en el backend real habría un endpoint)
-    alert(lang === "es" ? "Si el correo existe recibirás instrucciones." : "If the email exists, you'll receive instructions.");
+    alert("📧 " + (lang === "es" ? "Enlace enviado (demo)" : "Link sent (demo)"));
+    navigate("/login");
   };
 
   return (
-    <div className={`${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"} flex items-center justify-center min-h-screen`}>
+    <div className={`flex items-center justify-center min-h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-6 w-96"
+        className={`p-6 rounded shadow-md w-full max-w-sm ${darkMode ? "bg-gray-800" : "bg-white"}`}
       >
-        <h2 className="text-xl font-bold mb-4 text-center">
-          {lang === "es" ? "Recuperar Contraseña" : "Forgot Password"}
-        </h2>
+        <h2 className="text-xl font-bold mb-4">{translations[lang].title}</h2>
 
-        <label className="block mb-2">{lang === "es" ? "Correo electrónico" : "Email"}</label>
         <input
           type="email"
+          placeholder={translations[lang].email}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full p-2 rounded border mb-4 dark:bg-gray-700"
+          className="w-full mb-3 p-2 border rounded"
         />
 
+        <button type="submit" className="bg-purple-500 hover:bg-purple-600 text-white font-semibold w-full py-2 rounded mb-3 cursor-pointer">
+          {translations[lang].send}
+        </button>
+
         <button
-          type="submit"
-          className="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold rounded p-2 cursor-pointer"
+          type="button"
+          onClick={() => navigate("/login")}
+          className="text-blue-500 hover:underline font-semibold text-sm cursor-pointer"
         >
-          {lang === "es" ? "Enviar enlace" : "Send link"}
+          {translations[lang].back}
         </button>
       </form>
     </div>
