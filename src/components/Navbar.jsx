@@ -1,83 +1,21 @@
 import React, { useContext } from "react";
-import { LangContext, ThemeContext } from "../contexts";
+import { LangContext, ThemeContext } from "../App";
 
-function Navbar({ filters, setFilters, openAbout }) {
+function Navbar({ filters, setFilters }) {
   const { lang, toggleLang } = useContext(LangContext);
   const { darkMode, toggleTheme } = useContext(ThemeContext);
 
-  const translations = {
-    es: {
-      title: "Notas",
-      search: "Buscar...",
-      favorite: "Favoritas",
-      completed: "Completadas",
-      about: "Acerca de",
-    },
-    en: {
-      title: "Notes",
-      search: "Search...",
-      favorite: "Favorites",
-      completed: "Completed",
-      about: "About",
-    },
-  };
+  const t = {
+    es: { search: "Buscar", dark: "Oscuro", light: "Claro", lang: "EN" },
+    en: { search: "Search", dark: "Dark", light: "Light", lang: "ES" }
+  }[lang];
 
   return (
-    <nav
-      className={`p-4 flex justify-between items-center shadow-md ${
-        darkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-      }`}
-    >
-      <h1 className="text-xl font-bold">{translations[lang].title}</h1>
-
-      <div className="flex items-center gap-3">
-        {/* Filtro de búsqueda */}
-        <input
-          type="text"
-          placeholder={translations[lang].search}
-          value={filters.keyword}
-          onChange={(e) =>
-            setFilters({ ...filters, keyword: e.target.value })
-          }
-          className="border rounded p-1 text-sm"
-        />
-
-        {/* Checkbox favoritos */}
-        <label className="flex items-center gap-1 text-sm">
-          <input
-            type="checkbox"
-            checked={filters.favorite}
-            onChange={(e) =>
-              setFilters({ ...filters, favorite: e.target.checked })
-            }
-          />
-          {translations[lang].favorite}
-        </label>
-
-        {/* Checkbox completados */}
-        <label className="flex items-center gap-1 text-sm">
-          <input
-            type="checkbox"
-            checked={filters.completed}
-            onChange={(e) =>
-              setFilters({ ...filters, completed: e.target.checked })
-            }
-          />
-          {translations[lang].completed}
-        </label>
-
-        {/* Botones */}
-        <button onClick={toggleLang} className="px-2 py-1 border rounded cursor-pointer">
-          {lang === "es" ? "EN" : "ES"}
-        </button>
-
-        <button onClick={toggleTheme} className="px-2 py-1 border rounded cursor-pointer">
-          {darkMode ? "☀️" : "🌙"}
-        </button>
-
-        <button onClick={openAbout} className="px-2 py-1 border rounded cursor-pointer">
-          {translations[lang].about}
-        </button>
+    <nav className={`p-4 ${darkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'} flex justify-between items-center`}>
+      <input type="text" placeholder={t.search} value={filters.keyword} onChange={e => setFilters({ ...filters, keyword: e.target.value })} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
+      <div className="flex gap-2">
+        <button onClick={toggleTheme} className="p-2 border rounded">{darkMode ? t.light : t.dark}</button>
+        <button onClick={toggleLang} className="p-2 border rounded">{t.lang}</button>
       </div>
     </nav>
   );

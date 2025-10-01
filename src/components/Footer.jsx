@@ -1,28 +1,27 @@
-import React from "react"; // Componente Footer...
-import { FaGithub, FaLinkedin, FaEnvelope, FaHome } from "react-icons/fa";
-import { SiGmail } from "react-icons/si";
+import React, { useContext } from "react";
+import { LangContext } from "../App";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 function Footer() {
+  const { lang } = useContext(LangContext);
+
+  const t = {
+    es: { copyright: "© 2025 Mi App", github: "GitHub", linkedin: "LinkedIn", email: "Correo" },
+    en: { copyright: "© 2025 My App", github: "GitHub", linkedin: "LinkedIn", email: "Email" }
+  }[lang];
+
   return (
-    <footer className="bg-gray-200 dark:bg-gray-900 text-center py-4 mt-auto">
-      <p className="text-sm font-semibold">&copy; {new Date().getFullYear()} | Juls | All right reserved. </p>
-      <div className="flex justify-center space-x-6 mb-2">
-        <a href="https://jcesar206.github.io/myPersonalBlog/" target="_blank" rel="noreferrer">
-          <FaHome  className="hover:text-purple-600/70 transition-colors" size={20}/>
-        </a>
-				<a href="https://github.com/JCesar206" target="_blank" rel="noreferrer">
-          <FaGithub  className="hover:text-purple-600/70 transition-colors" size={20}/>
-        </a>
-				<a href="https://www.linkedin.com/in/jcesar206" target="_blank" rel="noreferrer">
-          <FaLinkedin  className="hover:text-purple-600/70 transition-colors" size={20}/>
-        </a>
-        <a href="mailto:jcesar206@hotmail.com">
-          <FaEnvelope  className="hover:text-purple-600/70 transition-colors" size={20}/>
-        </a>
-        <a href="mailto:jcesary06@gmail.com">
-          <SiGmail  className="hover:text-purple-600/70 transition-colors" size={20}/>
-        </a>
-			</div>
+    <footer className="fixed bottom-0 w-full p-4 bg-gray-200 dark:bg-gray-900 text-center flex justify-center gap-4 items-center">
+      <a href="https://github.com/" target="_blank" rel="noreferrer" className="flex items-center gap-1">
+        <FaGithub /> {t.github}
+      </a>
+      <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="flex items-center gap-1">
+        <FaLinkedin /> {t.linkedin}
+      </a>
+      <a href="mailto:correo@ejemplo.com" className="flex items-center gap-1">
+        <FaEnvelope /> {t.email}
+      </a>
+      <span>{t.copyright}</span>
     </footer>
   );
 }
