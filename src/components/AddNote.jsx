@@ -51,18 +51,18 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-4 rounded shadow flex flex-col gap-2">
       {error && <div className="text-red-500">{error}</div>}
-      <input id="titleInput" type="text" placeholder={t.title} value={title} onChange={e => setTitle(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
-      <textarea placeholder={t.content} value={content} onChange={e => setContent(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
-      <input type="text" placeholder={t.category} value={category} onChange={e => setCategory(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" />
+      <input id="titleInput" type="text" placeholder={t.title} value={title} onChange={e => setTitle(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
+      <textarea placeholder={t.content} value={content} onChange={e => setContent(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
+      <input type="text" placeholder={t.category} value={category} onChange={e => setCategory(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
       <div className="flex items-center gap-2">
         <label className="flex items-center gap-1"><input type="checkbox" checked={favorite} onChange={() => setFavorite(!favorite)} /> {t.favorite}</label>
         <label className="flex items-center gap-1"><input type="checkbox" checked={completed} onChange={() => setCompleted(!completed)} /> {t.completed}</label>
-        <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="text-yellow-400"><FaRegSmile /></button>
+        <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="text-yellow-400 cursor-pointer"><FaRegSmile /></button>
       </div>
       {showEmoji && <Picker onEmojiClick={handleEmojiClick} />}
       <div className="flex gap-2">
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">{noteToEdit ? t.update : t.add}</button>
-        <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white p-2 rounded">{t.clear}</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded cursor-pointer">{noteToEdit ? t.update : t.add}</button>
+        <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white font-semibold p-2 rounded cursor-pointer">{t.clear}</button>
       </div>
     </form>
   );

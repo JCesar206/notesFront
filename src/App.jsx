@@ -4,6 +4,7 @@ import AddNote from './components/AddNote';
 import NotesList from './components/NotesList';
 import Footer from './components/Footer';
 import axios from 'axios';
+import "./App.css";
 
 export const LangContext = createContext();
 export const ThemeContext = createContext();

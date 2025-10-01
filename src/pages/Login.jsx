@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { LangContext } from "../App";
+import { LangContext } from "../contexts";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
@@ -39,7 +39,7 @@ function Login({ setIsAuth }) {
         placeholder={t.email}
         value={email}
         onChange={e => setEmail(e.target.value)}
-        className="p-2 rounded border dark:bg-gray-700 dark:text-white"
+        className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text"
         required
       />
       <div className="relative">
@@ -53,13 +53,13 @@ function Login({ setIsAuth }) {
         />
         <button
           type="button"
-          className="absolute right-2 top-2 text-gray-600"
+          className="absolute right-2 top-2 text-gray-600 cursor-pointer"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </button>
       </div>
-      <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">{t.login}</button>
+      <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded cursor-pointer">{t.login}</button>
     </form>
   );
 }

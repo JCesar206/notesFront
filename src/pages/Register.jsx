@@ -28,11 +28,11 @@ function Register({ setIsAuth }) {
       <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" required />
       <div className="relative">
         <input type={showPassword ? "text" : "password"} placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white w-full" required />
-        <button type="button" className="absolute right-2 top-2 text-gray-600" onClick={() => setShowPassword(!showPassword)}>
+        <button type="button" className="absolute right-2 top-2 text-gray-600 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </button>
       </div>
-      <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">Register</button>
+      <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded cursor-pointer">Register</button>
     </form>
   );
 }
