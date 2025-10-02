@@ -1,3 +1,4 @@
+{/* Componente NotesList */}
 import React from "react";
 import { FaStar, FaCheck, FaTrash, FaEdit } from "react-icons/fa";
 import axios from "axios";

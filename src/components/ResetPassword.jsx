@@ -1,4 +1,5 @@
-import React,{ useState, useContext} from "react"; // Componente de ResetPassword...
+{/* Componente de ResetPassword */}
+import React,{ useState, useContext} from "react";
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function ResetPassword() {

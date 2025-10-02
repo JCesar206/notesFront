@@ -1,3 +1,4 @@
+{/* Componente Footer */}
 import React, { useContext } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaHome } from "react-icons/fa";
 import { LangContext } from "../contexts/LangContext";
