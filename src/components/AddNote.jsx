@@ -67,9 +67,9 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-4 rounded shadow flex flex-col gap-2">
       {error && <div className="text-red-500">{error}</div>}
-      <input id="titleInput" value={title} onChange={(e)=>setTitle(e.target.value)} placeholder={t.title} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
-      <textarea value={content} onChange={(e)=>setContent(e.target.value)} placeholder={t.content} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
-      <input value={category} onChange={(e)=>setCategory(e.target.value)} placeholder={t.category} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
+      <input id="titleInput" value={title} onChange={(e)=>setTitle(e.target.value)} placeholder={t.title} className="p-2 rounded border dark:bg-gray-700 dark:text-white font-semibold cursor-text" />
+      <textarea value={content} onChange={(e)=>setContent(e.target.value)} placeholder={t.content} className="p-2 rounded border dark:bg-gray-700 dark:text-white font-semibold cursor-text" />
+      <input value={category} onChange={(e)=>setCategory(e.target.value)} placeholder={t.category} className="p-2 rounded border dark:bg-gray-700 dark:text-white font-semibold cursor-text" />
       <div className="flex items-center gap-3">
         <label className="flex items-center gap-1"><input type="checkbox" checked={favorite} onChange={()=>setFavorite(!favorite)} /> {t.favorite}</label>
         <label className="flex items-center gap-1"><input type="checkbox" checked={completed} onChange={()=>setCompleted(!completed)} /> {t.completed}</label>
@@ -77,8 +77,8 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
       </div>
       {showEmoji && <Picker onEmojiClick={onEmojiClick} />}
       <div className="flex gap-2">
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded cursor-pointer">{noteToEdit ? t.update : t.add}</button>
-        <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white font-semibold p-2 rounded cursor-pointer">{t.clear}</button>
+        <button type="submit" className="bg-indigo-600 hover:bg-indigo-800 text-white font-semibold p-2 rounded cursor-pointer">{noteToEdit ? t.update : t.add}</button>
+        <button type="button" onClick={handleClear} className="bg-purple-600 hover:bg-purple-800 text-white font-semibold p-2 rounded cursor-pointer">{t.clear}</button>
       </div>
     </form>
   );
