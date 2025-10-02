@@ -23,11 +23,10 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
   };
 
   return (
-    <nav className={`w-full ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"} shadow`}>
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="text-xl font-bold">📝 Nota Loka</div>
-        </div>
+    <nav className={`bg-white dark:bg-gray-800 shadow p-4`}>
+      <div className="container mx-auto flex justify-between items-center">
+        {/* Logo / Título */}
+        <div className="font-bold text-xl shadow-violet-700 shadow-2xl">😃 Nota Loka</div>
 
         {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-4">

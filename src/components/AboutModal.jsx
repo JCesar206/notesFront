@@ -1,6 +1,7 @@
-{/* Componente AboutModal */}
 import React, { useContext } from "react";
 import { LangContext } from "../contexts/LangContext";
+import { FaReact, FaNodeJs } from "react-icons/fa";
+import { SiTailwindcss, SiExpress, SiPostgresql } from "react-icons/si";
 
 function AboutModal({ close }) {
   const { lang } = useContext(LangContext);
@@ -19,10 +20,11 @@ function AboutModal({ close }) {
         <div className="mb-4">
           <h3 className="font-semibold">{t.tech}:</h3>
           <div className="flex gap-2 justify-center mt-2">
-            <span className="px-2 py-1 border rounded">React</span>
-            <span className="px-2 py-1 border rounded">Tailwind</span>
-            <span className="px-2 py-1 border rounded">Node</span>
-            <span className="px-2 py-1 border rounded">Postgres</span>
+            <FaReact size={20} title="React" className="text-sky-400 hover:text-sky-700" />
+            <SiTailwindcss size={20} title="Tailwind CSS" className="text-blue-500 hover:text-blue-700" />
+            <FaNodeJs size={20} title="Node.js" className="text-green-600 hover:text-green-800" />
+            <SiExpress size={20} title="Express" className="text-gray-600 hover:text-gray-800" />
+            <SiPostgresql size={20} title="Postgre SQL" className="text-indigo-500 hover:text-indigo-800" />
           </div>
         </div>
         <button onClick={close} className="bg-blue-500 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded cursor-pointer">{t.close}</button>
