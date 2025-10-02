@@ -1,4 +1,3 @@
-{/* Componente Navbar */}
 import React, { useState, useContext } from "react";
 import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
 import { LangContext, ThemeContext } from "../App";
