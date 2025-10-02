@@ -24,7 +24,7 @@ function AboutModal({ close }) {
             <SiTailwindcss size={20} title="Tailwind CSS" className="text-blue-500 hover:text-blue-700" />
             <FaNodeJs size={20} title="Node.js" className="text-green-600 hover:text-green-800" />
             <SiExpress size={20} title="Express" className="text-gray-600 hover:text-gray-800" />
-            <SiPostgresql size={20} title="Postgre SQL" className="text-indigo-600 hover:text-indigo-800" />
+            <SiPostgresql size={20} title="Postgre SQL" className="text-indigo-500 hover:text-indigo-800" />
           </div>
         </div>
         <button onClick={close} className="bg-blue-500 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded cursor-pointer">{t.close}</button>

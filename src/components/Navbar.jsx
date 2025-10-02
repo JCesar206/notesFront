@@ -16,7 +16,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
     <nav className={`bg-white dark:bg-gray-800 shadow p-4`}>
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo / Título */}
-        <div className="font-bold text-xl shadow-purple-600 shadow-2xl">Nota Loka</div>
+        <div className="font-bold text-xl shadow-violet-700 shadow-2xl">Nota Loka</div>
 
         {/* Menú horizontal en pantallas grandes */}
         <ul className="hidden md:flex gap-4 items-center">

@@ -13,19 +13,19 @@ function Footer() {
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 py-6 mt-8">
       <div className="container mx-auto text-center flex flex-col md:flex-row items-center justify-center gap-4">
-        <a href="https://jcesar206.github.io/myPersonalBlog/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-purple-600">
+        <a href="https://jcesar206.github.io/myPersonalBlog/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-violet-700">
           <FaHome size={20} title={t.home}/>
         </a>
-        <a href="https://github.com/JCesar206" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-purple-600">
+        <a href="https://github.com/JCesar206" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-violet-700">
           <FaGithub size={20} title={t.github} />
         </a>
-        <a href="https://www.linkedin.com/in/jcesar206" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-purple-600">
+        <a href="https://www.linkedin.com/in/jcesar206" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-violet-700">
           <FaLinkedin size={20} title={t.linkedin} />
         </a>
-        <a href="mailto:jcesar206@hotmail.com" className="flex items-center gap-2 hover:text-purple-600">
+        <a href="mailto:jcesar206@hotmail.com" className="flex items-center gap-2 hover:text-violet-700">
           <FaEnvelope size={20} title={t.mail} />
         </a>
-        <a href="mailto:jcesary06@gmail.com" className="flex items-center gap-2 hover:text-purple-600">
+        <a href="mailto:jcesary06@gmail.com" className="flex items-center gap-2 hover:text-violet-700">
           <SiGmail size={20} title={t.gmail} />
         </a>
       </div>
