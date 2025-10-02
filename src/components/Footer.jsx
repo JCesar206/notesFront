@@ -1,34 +1,35 @@
 import React, { useContext } from "react";
-import { LangContext } from "../App";
 import { FaGithub, FaLinkedin, FaEnvelope, FaHome } from "react-icons/fa";
+import { LangContext } from "../contexts/LangContext";
 import { SiGmail } from "react-icons/si";
 
 function Footer() {
   const { lang } = useContext(LangContext);
-
   const t = {
-    es: { copyright: "Mi App", github: "GitHub", linkedin: "LinkedIn", email: "Correo" },
-    en: { copyright: "My App", github: "GitHub", linkedin: "LinkedIn", email: "Email" }
+    es: { home: "Página Principal", copyright: "Todos los derechos reservados." , github: "GitHub", linkedin: "LinkedIn", mail: "Hotmail" },
+    en: { home: "Home Page", copyright: "All right reserved.", github: "GitHub", linkedin: "LinkedIn", mail: "Email" }
   }[lang];
 
   return (
-    <footer className="fixed bottom-0 w-full p-4 bg-gray-200 dark:bg-gray-900 text-center flex justify-center gap-4 items-center">
-      <a href="https://jcesar206.github.io/myPersonalBlog/" target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-purple-600">
-        <FaHome size={20} />
-      </a>
-      <a href="https://github.com/JCesar206" target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-purple-600">
-        <FaGithub size={20}/> {t.github}
-      </a>
-      <a href="https://www.linkedin.com/in/jcesar206" target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-purple-600">
-        <FaLinkedin size={20}/> {t.linkedin}
-      </a>
-      <a href="mailto:jcesar206@hotmail.com" className="flex items-center gap-1 hover:text-purple-600">
-        <FaEnvelope size={20}/> {t.email}
-      </a>
-      <a href="mailto:jcesary06@gmail.com" className="flex items-center gap-1 hover:text-purple-600">
-        <SiGmail size={20}/> {t.email}
-      </a>
-      <span>&copy; {new Date().getFullYear()} | {t.copyright} | Juls </span>
+    <footer className="bg-gray-100 dark:bg-gray-900 py-6 mt-8">
+      <div className="container mx-auto text-center flex flex-col md:flex-row items-center justify-center gap-4">
+        <a href="https://jcesar206.github.io/myPersonalBlog/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-purple-600">
+          <FaHome size={20} /> <span>{t.home}</span>
+        </a>
+        <a href="https://github.com/JCesar206" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-purple-600">
+          <FaGithub size={20}/> <span>{t.github}</span>
+        </a>
+        <a href="https://www.linkedin.com/in/jcesar206" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-purple-600">
+          <FaLinkedin size={20}/> <span>{t.linkedin}</span>
+        </a>
+        <a href="mailto:jcesar206@hotmail.com" className="flex items-center gap-2 hover:text-purple-600">
+          <FaEnvelope size={20}/> <span>{t.mail}</span>
+        </a>
+        <a href="mailto:jcesary06@gmail.com" className="flex items-center gap-2 hover:text-purple-600">
+          <SiGmail size={20}/> <span>{t.mail}</span>
+        </a>
+      </div>
+      <div className="text-center mt-3 text-sm font-semibold text-gray-600 dark:text-gray-400">&copy; {new Date().getFullYear()} | {t.copyright} | Juls</div>
     </footer>
   );
 }

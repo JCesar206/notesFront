@@ -1,21 +1,30 @@
 import React, { useContext } from "react";
-import { LangContext } from "../App";
+import { LangContext } from "../contexts/LangContext";
 
 function AboutModal({ close }) {
   const { lang } = useContext(LangContext);
 
   const t = {
-    es: { title: "Acerca de", content: "Esta es una aplicación de notas de ejemplo.", close: "Cerrar" },
-    en: { title: "About", content: "This is a sample notes application.", close: "Close" }
+    es: { title: "Acerca de", text: "Desarrollador: Tu Nombre. Esta app usa React, Tailwind, Node, PostgreSQL.", close: "Cerrar", tech: "Tecnologías usadas" },
+    en: { title: "About", text: "Developer: Your Name. This app uses React, Tailwind, Node, PostgreSQL.", close: "Close", tech: "Technologies used" }
   }[lang];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow max-w-md w-full">
-        <h2 className="text-xl font-bold mb-4">{t.title}</h2>
-        <img src="./myPhoto.jpg" alt="Foto Profesional" />
-        <p className="mb-4">{t.content}</p>
-        <button onClick={close} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold p-2 rounded cursor-pointer">{t.close}</button>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded shadow max-w-md w-full p-6 text-center">
+        <img src="myPhoto.jpg" alt="Foto Profesional" className="w-32 h-32 object-cover rounded-full mx-auto mb-4" />
+        <h2 className="text-xl font-bold mb-2">{t.title}</h2>
+        <p className="mb-4">{t.text}</p>
+        <div className="mb-4">
+          <h3 className="font-semibold">{t.tech}:</h3>
+          <div className="flex gap-2 justify-center mt-2">
+            <span className="px-2 py-1 border rounded">React</span>
+            <span className="px-2 py-1 border rounded">Tailwind</span>
+            <span className="px-2 py-1 border rounded">Node</span>
+            <span className="px-2 py-1 border rounded">Postgres</span>
+          </div>
+        </div>
+        <button onClick={close} className="bg-blue-500 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded cursor-pointer">{t.close}</button>
       </div>
     </div>
   );

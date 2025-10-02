@@ -1,62 +1,37 @@
 import React, { useState, useContext } from "react";
-import { LangContext, ThemeContext } from "../contexts";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { LangContext } from "../contexts/LangContext";
+
+const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
 function ForgotPassword() {
   const { lang } = useContext(LangContext);
-  const { darkMode } = useContext(ThemeContext);
+  const t = { es:{ email:"Correo", send:"Enviar", success:"Si existe te llegará un correo" }, en:{ email:"Email", send:"Send", success:"If exists you'll receive an email" } }[lang];
+
   const [email, setEmail] = useState("");
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-  const translations = {
-    es: {
-      title: "Recuperar Contraseña",
-      email: "Correo electrónico",
-      send: "Enviar enlace",
-      back: "Volver al login",
-    },
-    en: {
-      title: "Forgot Password",
-      email: "Email",
-      send: "Send link",
-      back: "Back to login",
-    },
-  };
-
-  const handleSubmit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    alert("📧 " + (lang === "es" ? "Enlace enviado (demo)" : "Link sent (demo)"));
-    navigate("/login");
+    setError(""); setMessage("");
+    try {
+      // Implementation depends on backend; here we call /auth/forgot (if implemented)
+      await axios.post(`${BASE_URL}/auth/forgot-password`, { email });
+      setMessage(t.success);
+    } catch (err) {
+      setError(err.response?.data?.error || "Error");
+    }
   };
 
   return (
-    <div className={`flex items-center justify-center min-h-screen ${darkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
-      <form
-        onSubmit={handleSubmit}
-        className={`p-6 rounded shadow-md w-full max-w-sm ${darkMode ? "bg-gray-800" : "bg-white"}`}
-      >
-        <h2 className="text-xl font-bold mb-4">{translations[lang].title}</h2>
-
-        <input
-          type="email"
-          placeholder={translations[lang].email}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full mb-3 p-2 border rounded"
-        />
-
-        <button type="submit" className="bg-purple-500 hover:bg-purple-600 text-white font-semibold w-full py-2 rounded mb-3 cursor-pointer">
-          {translations[lang].send}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => navigate("/login")}
-          className="text-blue-500 hover:underline font-semibold text-sm cursor-pointer"
-        >
-          {translations[lang].back}
-        </button>
+    <div className="max-w-md mx-auto mt-8 p-6 bg-white dark:bg-gray-800 rounded shadow">
+      <form onSubmit={submit} className="flex flex-col gap-3">
+        {message && <div className="text-green-500 font-semibold">{message}</div>}
+        {error && <div className="text-red-500 font-semibold">{error}</div>}
+        <input type="email" placeholder={t.email} value={email} onChange={e=>setEmail(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" required />
+        <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold p-2 rounded cursor-pointer">{t.send}</button>
       </form>
     </div>
   );
