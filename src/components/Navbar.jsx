@@ -23,7 +23,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           <li>
             <button
               onClick={() => setFilters({ ...filters, favorite: !filters.favorite })}
-              className="hover:underline font-semibold cursor-pointer"
+              className="hover:underline font-bold cursor-pointer"
             >
               {lang === "es" ? "Favoritos" : "Favorites"}
             </button>
@@ -31,7 +31,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           <li>
             <button
               onClick={() => setFilters({ ...filters, completed: !filters.completed })}
-              className="hover:underline font-semibold cursor-pointer"
+              className="hover:underline font-bold cursor-pointer"
             >
               {lang === "es" ? "Completadas" : "Completed"}
             </button>
@@ -47,12 +47,12 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </button>
           </li>
           <li>
-            <button onClick={openAbout} className="font-semibold cursor-pointer">
+            <button onClick={openAbout} className="font-bold cursor-pointer">
               {lang === "es" ? "Acerca" : "About"}
             </button>
           </li>
           <li>
-            <button onClick={handleLogout} className="text-red-500 hover:underline font-semibold cursor-pointer">
+            <button onClick={handleLogout} className="text-red-500 hover:underline font-bold cursor-pointer">
               {lang === "es" ? "Cerrar sesión" : "Logout"}
             </button>
           </li>
@@ -72,7 +72,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           <li>
             <button
               onClick={() => { setFilters({ ...filters, favorite: !filters.favorite }); setMenuOpen(false); }}
-              className="w-full text-left hover:underline font-semibold cursor-pointer"
+              className="w-full text-left hover:underline font-bold cursor-pointer"
             >
               {lang === "es" ? "Favoritos" : "Favorites"}
             </button>
@@ -80,7 +80,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           <li>
             <button
               onClick={() => { setFilters({ ...filters, completed: !filters.completed }); setMenuOpen(false); }}
-              className="w-full text-left hover:underline font-semibold cursor-pointer"
+              className="w-full text-left hover:underline font-bold cursor-pointer"
             >
               {lang === "es" ? "Completadas" : "Completed"}
             </button>
@@ -91,17 +91,17 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </button>
           </li>
           <li>
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="font-semibold cursor-pointer">
+            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="font-bold cursor-pointer">
               {lang === "es" ? "EN" : "ES"}
             </button>
           </li>
           <li>
-            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="font-semibold cursor-pointer">
+            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="font-bold cursor-pointer">
               {lang === "es" ? "Acerca" : "About"}
             </button>
           </li>
           <li>
-            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="text-red-500 hover:underline font-semibold cursor-pointer">
+            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="text-red-500 hover:underline font-bold cursor-pointer">
               {lang === "es" ? "Cerrar sesión" : "Logout"}
             </button>
           </li>

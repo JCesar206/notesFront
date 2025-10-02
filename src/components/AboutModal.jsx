@@ -20,11 +20,11 @@ function AboutModal({ close }) {
         <div className="mb-4">
           <h3 className="font-semibold">{t.tech}:</h3>
           <div className="flex gap-2 justify-center mt-2">
-            <FaReact size={20} title="React" className="text-sky-400 font-semibold hover:text-sky-700" />
-            <SiTailwindcss size={20} title="Tailwind CSS" className="text-blue-500 font-semibold hover:text-blue-700" />
-            <FaNodeJs size={20} title="Node.js" className="text-green-600 font-semibold hover:text-green-800" />
-            <SiExpress size={20} title="Express" className="text-gray-600 font-semibold hover:text-gray-800" />
-            <SiPostgresql size={20} title="Postgre SQL" className="text-indigo-600 font-semibold hover:text-indigo-800" />
+            <FaReact size={24} title="React" className="text-sky-400 font-semibold hover:text-sky-700" />
+            <SiTailwindcss size={24} title="Tailwind CSS" className="text-blue-500 font-semibold hover:text-blue-700" />
+            <FaNodeJs size={24} title="Node.js" className="text-green-600 font-semibold hover:text-green-800" />
+            <SiExpress size={24} title="Express" className="text-gray-600 font-semibold hover:text-gray-800" />
+            <SiPostgresql size={24} title="Postgre SQL" className="text-indigo-600 font-semibold hover:text-indigo-800" />
           </div>
         </div>
         <button onClick={close} className="bg-blue-500 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded cursor-pointer">{t.close}</button>

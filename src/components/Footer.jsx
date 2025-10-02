@@ -6,8 +6,8 @@ import { SiGmail } from "react-icons/si";
 function Footer() {
   const { lang } = useContext(LangContext);
   const t = {
-    es: { home: "Página Principal", copyright: "Todos los derechos reservados." , github: "GitHub", linkedin: "LinkedIn", mail: "Hotmail", gmail: "Gmail" },
-    en: { home: "Home Page", copyright: "All right reserved.", github: "GitHub", linkedin: "LinkedIn", mail: "Email", gmail: "Gmail" }
+    es: { home: "Página Principal", copyright: "Todos los derechos reservados." , github: "GitHub", linkedin: "LinkedIn", mail: "Hotmail", g_mail: "Gmail" },
+    en: { home: "Home Page", copyright: "All right reserved.", github: "GitHub", linkedin: "LinkedIn", mail: "Email", g_mail: "Gmail" }
   }[lang];
 
   return (
@@ -26,7 +26,7 @@ function Footer() {
           <FaEnvelope size={20} title={t.mail} />
         </a>
         <a href="mailto:jcesary06@gmail.com" className="flex items-center gap-2 hover:text-violet-700">
-          <SiGmail size={20} title={t.gmail} />
+          <SiGmail size={20} title={t.g_mail} />
         </a>
       </div>
       <div className="text-center mt-3 text-sm font-semibold text-gray-900 dark:text-gray-400">&copy; {new Date().getFullYear()} | Juls 😎 Be Happy |{t.copyright}</div>
