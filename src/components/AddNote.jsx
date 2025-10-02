@@ -77,8 +77,8 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
       </div>
       {showEmoji && <Picker onEmojiClick={onEmojiClick} />}
       <div className="flex gap-2">
-        <button type="submit" className="bg-indigo-600 hover:bg-indigo-800 text-white font-semibold p-2 rounded cursor-pointer">{noteToEdit ? t.update : t.add}</button>
-        <button type="button" onClick={handleClear} className="bg-purple-600 hover:bg-purple-800 text-white font-semibold p-2 rounded cursor-pointer">{t.clear}</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-800 text-white font-semibold p-2 rounded cursor-pointer">{noteToEdit ? t.update : t.add}</button>
+        <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-800 text-white font-semibold p-2 rounded cursor-pointer">{t.clear}</button>
       </div>
     </form>
   );

@@ -49,10 +49,10 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit, lang }) {
             <p className="text-sm text-gray-500 font-semibold dark:text-gray-400">{note.category}</p>
           </div>
           <div className="flex flex-row md:flex-col items-center gap-2">
-            <button onClick={() => toggleFavorite(note)} className="flex items-center gap-1 cursor-pointer">{note.favorite ? <FaStar className="text-yellow-400" /> : <FaStar />} <span className="hidden md:inline font-semibold">{t.favorite}</span></button>
-            <button onClick={() => toggleCompleted(note)} className="flex items-center gap-1 cursor-pointer">{note.completed ? <FaCheck className="text-green-500" /> : <FaCheck />} <span className="hidden md:inline font-semibold">{t.completed}</span></button>
-            <button onClick={() => setNoteToEdit(note)} className="text-blue-500 cursor-pointer"><FaEdit /></button>
-            <button onClick={() => handleDelete(note.id)} className="text-red-500 cursor-pointer"><FaTrash /></button>
+            <button onClick={() => toggleFavorite(note)} className="flex items-center gap-1 cursor-pointer">{note.favorite ? <FaStar className="text-yellow-400 hover:text-yellow-600" /> : <FaStar />} <span className="hidden md:inline font-semibold">{t.favorite}</span></button>
+            <button onClick={() => toggleCompleted(note)} className="flex items-center gap-1 cursor-pointer">{note.completed ? <FaCheck className="text-green-500 hover:text-green-700" /> : <FaCheck />} <span className="hidden md:inline font-semibold">{t.completed}</span></button>
+            <button onClick={() => setNoteToEdit(note)} className="text-blue-500 hover:text-blue-700 cursor-pointer"><FaEdit /></button>
+            <button onClick={() => handleDelete(note.id)} className="text-red-500 hover:text-red-700 cursor-pointer"><FaTrash /></button>
           </div>
         </div>
       ))}
