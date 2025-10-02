@@ -5,8 +5,8 @@ function AboutModal({ close }) {
   const { lang } = useContext(LangContext);
 
   const t = {
-    es: { title: "Acerca de", text: "Desarrollador: Tu Nombre. Esta app usa React, Tailwind, Node, PostgreSQL.", close: "Cerrar", tech: "Tecnologías usadas" },
-    en: { title: "About", text: "Developer: Your Name. This app uses React, Tailwind, Node, PostgreSQL.", close: "Close", tech: "Technologies used" }
+    es: { title: "Acerca de", text: "Desarrollador: Julio César Yañez M. Esta app usa React, Tailwind, Node, PostgreSQL.", close: "Cerrar", tech: "Tecnologías usadas" },
+    en: { title: "About", text: "Developer: Julio César Yañez M. This app uses React, Tailwind, Node, PostgreSQL.", close: "Close", tech: "Technologies used" }
   }[lang];
 
   return (
