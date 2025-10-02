@@ -42,7 +42,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </button>
           </li>
           <li>
-            <button onClick={toggleLang} className="font-semibold cursor-pointer">
+            <button onClick={toggleLang}>
               {lang === "es" ? "EN" : "ES"}
             </button>
           </li>
@@ -60,7 +60,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
 
         {/* Menú hamburguesa en pantallas pequeñas */}
         <div className="md:hidden">
-          <button onClick={() => setMenuOpen(!menuOpen)} className="cursor-pointer">
+          <button onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
@@ -86,7 +86,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </button>
           </li>
           <li>
-            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="flex items-center gap-1">
+            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="flex items-center gap-1 cursor-pointer">
               {darkMode ? <FaSun /> : <FaMoon />}
             </button>
           </li>
