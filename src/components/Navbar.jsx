@@ -42,12 +42,12 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </button>
           </li>
           <li>
-            <button onClick={toggleLang} className="font-semibold cursor-pointer">
+            <button onClick={toggleLang} className="font-semibold hover:underline cursor-pointer">
               {lang === "es" ? "EN" : "ES"}
             </button>
           </li>
           <li>
-            <button onClick={openAbout} className="font-semibold cursor-pointer">
+            <button onClick={openAbout} className="font-semibold hover:underline cursor-pointer">
               {lang === "es" ? "Acerca" : "About"}
             </button>
           </li>
@@ -91,12 +91,12 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </button>
           </li>
           <li>
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="font-semibold cursor-pointer">
+            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="hover:underline font-semibold cursor-pointer">
               {lang === "es" ? "EN" : "ES"}
             </button>
           </li>
           <li>
-            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="flex items-center gap-1 font-semibold cursor-pointer">
+            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="flex items-center gap-1 hover:underline font-semibold cursor-pointer">
               {lang === "es" ? "Acerca" : "About"}
             </button>
           </li>
