@@ -1,4 +1,3 @@
-{/* Componente AboutModal */}
 import React, { useContext } from "react";
 import { LangContext } from "../contexts/LangContext";
 import { FaReact, FaNodeJs } from "react-icons/fa";
