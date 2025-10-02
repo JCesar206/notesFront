@@ -29,7 +29,7 @@ function Footer() {
           <SiGmail size={20}/> <span>{t.mail}</span>
         </a>
       </div>
-      <div className="text-center mt-3 text-sm font-semibold text-gray-600 dark:text-gray-400">&copy; {new Date().getFullYear()} | {t.copyright} | Juls</div>
+      <div className="text-center mt-3 text-sm font-semibold text-gray-800 dark:text-gray-400">&copy; {new Date().getFullYear()} | Juls 😎 Be Happy |{t.copyright}</div>
     </footer>
   );
 }

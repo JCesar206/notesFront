@@ -1,3 +1,4 @@
+{/* Componente AboutModal */}
 import React, { useContext } from "react";
 import { LangContext } from "../contexts/LangContext";
 
