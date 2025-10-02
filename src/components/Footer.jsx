@@ -27,7 +27,7 @@ function Footer() {
           <FaEnvelope size={20} title={t.mail} />
         </a>
         <a href="mailto:jcesary06@gmail.com" className="flex items-center gap-2 hover:text-violet-700">
-          <SiGmail size={20} title={t.gmail} />
+          <SiGmail size={20} title={t.g_mail} />
         </a>
       </div>
       <div className="text-center mt-3 text-sm font-semibold text-gray-900 dark:text-gray-400">&copy; {new Date().getFullYear()} | Juls 😎 Be Happy |{t.copyright}</div>
