@@ -1,3 +1,4 @@
+{/* Componente Footer */}
 import React, { useContext } from "react";
 import { LangContext } from "../contexts/LangContext";
 
