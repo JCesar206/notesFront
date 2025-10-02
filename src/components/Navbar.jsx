@@ -16,7 +16,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
     <nav className={`bg-white dark:bg-gray-800 shadow p-4`}>
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo / Título */}
-        <div className="font-bold text-xl shadow-violet-700 shadow-2xl">Nota Loka</div>
+        <div className="font-bold text-xl">😃 Nota Loka</div>
 
         {/* Menú horizontal en pantallas grandes */}
         <ul className="hidden md:flex gap-4 items-center">
@@ -42,25 +42,25 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </button>
           </li>
           <li>
-            <button onClick={toggleLang} className="font-semibold hover:underline cursor-pointer">
+            <button onClick={toggleLang} className="font-semibold cursor-pointer">
               {lang === "es" ? "EN" : "ES"}
             </button>
           </li>
           <li>
-            <button onClick={openAbout} className="font-semibold hover:underline cursor-pointer">
+            <button onClick={openAbout} className="font-semibold cursor-pointer">
               {lang === "es" ? "Acerca" : "About"}
             </button>
           </li>
           <li>
-            <button onClick={handleLogout} className="text-red-500 hover:underline cursor-pointer">
+            <button onClick={handleLogout} className="text-red-500 hover:underline font-semibold cursor-pointer">
               {lang === "es" ? "Cerrar sesión" : "Logout"}
             </button>
           </li>
         </ul>
 
         {/* Menú hamburguesa en pantallas pequeñas */}
-        <div className="md:hidden cursor-pointer">
-          <button onClick={() => setMenuOpen(!menuOpen)}>
+        <div className="md:hidden">
+          <button onClick={() => setMenuOpen(!menuOpen)} className="cursor-pointer">
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
@@ -86,17 +86,17 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </button>
           </li>
           <li>
-            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="flex items-center gap-1 cursor-pointer">
+            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="flex items-center gap-1">
               {darkMode ? <FaSun /> : <FaMoon />}
             </button>
           </li>
           <li>
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="hover:underline font-semibold cursor-pointer">
+            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="font-semibold cursor-pointer">
               {lang === "es" ? "EN" : "ES"}
             </button>
           </li>
           <li>
-            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="flex items-center gap-1 hover:underline font-semibold cursor-pointer">
+            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="font-semibold cursor-pointer">
               {lang === "es" ? "Acerca" : "About"}
             </button>
           </li>
