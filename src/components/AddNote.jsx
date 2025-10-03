@@ -1,40 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { LangContext } from "../contexts/LangContext";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
 function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
+  const { lang } = useContext(LangContext);
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [favorite, setFavorite] = useState(false);
+  const [completed, setCompleted] = useState(false);
 
   const token = localStorage.getItem("token");
 
-  // Si hay nota a editar, cargamos los datos
-  React.useEffect(() => {
+  const t = {
+    es: { 
+      title: "Título", content: "Contenido...", category: "Categoría", favorite: "Favorito", completed: "Completada",
+      add: "Agregar 🆕", update: "Actualizar ✏️", clear: "Limpiar 🧼"
+    },
+    en: { 
+      title: "Title", content: "Content...", category: "Category", favorite: "Favorite", completed: "Completed",
+      add: "Add 🆕", update: "Update ✏️", clear: "Clear 🧼"
+    }
+  }[lang || "es"];
+
+  useEffect(() => {
     if (noteToEdit) {
       setTitle(noteToEdit.title);
       setContent(noteToEdit.content);
       setCategory(noteToEdit.category || "");
       setFavorite(noteToEdit.favorite || false);
+      setCompleted(noteToEdit.completed || false);
     }
   }, [noteToEdit]);
 
-  // Guardar o actualizar nota
+  const handleClear = () => {
+    setTitle("");
+    setContent("");
+    setCategory("");
+    setFavorite(false);
+    setCompleted(false);
+    setNoteToEdit(null);
+  };
+
+  const insertEmoji = (emoji) => setContent(prev => prev + emoji);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!title || !content) return;
     try {
       if (noteToEdit) {
         await axios.put(
           `${BASE_URL}/notes/${noteToEdit._id}`,
-          { title, content, category, favorite },
+          { title, content, category, favorite, completed },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         await axios.post(
           `${BASE_URL}/notes`,
-          { title, content, category, favorite },
+          { title, content, category, favorite, completed },
           { headers: { Authorization: `Bearer ${token}` } }
         );
       }
@@ -45,90 +71,67 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
     }
   };
 
-  // Limpiar formulario
-  const handleClear = () => {
-    setTitle("");
-    setContent("");
-    setCategory("");
-    setFavorite(false);
-    setNoteToEdit(null);
-  };
-
-  // Insertar emoji al contenido
-  const insertEmoji = (emoji) => {
-    setContent(content + " " + emoji);
-  };
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="p-4 bg-white dark:bg-gray-800 rounded shadow flex flex-col gap-3"
-    >
-      {/* Título */}
+    <form onSubmit={handleSubmit} className="p-4 bg-white dark:bg-gray-800 rounded shadow flex flex-col gap-3">
       <input
         className="border p-2 rounded dark:bg-gray-700 dark:text-white"
-        placeholder="Título"
+        placeholder={t.title}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
       />
-
-      {/* Contenido */}
       <textarea
         className="border p-2 rounded dark:bg-gray-700 dark:text-white"
-        placeholder="Contenido..."
+        placeholder={t.content}
         value={content}
         onChange={(e) => setContent(e.target.value)}
         rows="4"
         required
       />
-
-      {/* Categoría */}
       <input
         className="border p-2 rounded dark:bg-gray-700 dark:text-white"
-        placeholder="Categoría"
+        placeholder={t.category}
         value={category}
         onChange={(e) => setCategory(e.target.value)}
       />
 
-      {/* Favorito */}
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={favorite}
-          onChange={(e) => setFavorite(e.target.checked)}
-        />
-        Favorito ⭐
-      </label>
+      <div className="flex gap-4 items-center">
+        <label className="flex items-center gap-1">
+          <input type="checkbox" checked={favorite} onChange={() => setFavorite(!favorite)} />
+          {t.favorite} ⭐
+        </label>
+        <label className="flex items-center gap-1">
+          <input type="checkbox" checked={completed} onChange={() => setCompleted(!completed)} />
+          {t.completed} ✅
+        </label>
+      </div>
 
-      {/* Emojis */}
       <div className="flex flex-wrap gap-2">
-        {["😀","🔥","✅","😎","⭐","😱","👍","🐶","🐱","❤️","💯","🥺","🤯","😡","🙏","🤗","😍"].map((emoji) => (
+        {["😀","🔥","✅","😎","⭐","😱","👍","🐶","🐱","❤️","💯","🥺","🤯","😡","🙏","🤗","😍","🍺"].map(emoji => (
           <button
             key={emoji}
             type="button"
             onClick={() => insertEmoji(emoji)}
-            className="px-2 py-1 bg-gray-400 rounded hover:bg-gray-600 dark:hover:bg-gray-800 cursor-pointer"
+            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-400 dark:hover:bg-gray-600 cursor-pointer"
           >
             {emoji}
           </button>
         ))}
       </div>
 
-      {/* Botones */}
       <div className="flex gap-3">
         <button
           type="submit"
-          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-violet-700 font-semibold cursor-pointer"
+          className="bg-violet-500 text-white px-4 py-2 rounded hover:bg-violet-700 font-semibold cursor-pointer"
         >
-          {noteToEdit ? "Actualizar 🔄" : "Agregar 🆕"}
+          {noteToEdit ? t.update : t.add}
         </button>
         <button
           type="button"
           onClick={handleClear}
-          className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-600 font-semibold cursor-pointer"
+          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 font-semibold cursor-pointer"
         >
-          Limpiar 🧹
+          {t.clear}
         </button>
       </div>
     </form>
@@ -136,3 +139,4 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
 }
 
 export default AddNote;
+
