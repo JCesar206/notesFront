@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import axios from "axios";
 import { LangContext } from "./contexts/LangContext";
 import { ThemeContext } from "./contexts/ThemeContext";
+import "./App.css";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
