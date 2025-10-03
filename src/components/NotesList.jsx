@@ -1,56 +1,92 @@
-import React from "react";
-import { FaStar, FaCheck, FaTrash, FaEdit } from "react-icons/fa";
+import React, { useContext } from "react";
 import axios from "axios";
+import { LangContext } from "../contexts/LangContext";
+import { FaTrash, FaEdit, FaStar, FaCheck } from "react-icons/fa";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
-function NotesList({ notes, fetchNotes, filters, setNoteToEdit, lang }) {
-  const token = localStorage.getItem("token");
+function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
+  const { lang } = useContext(LangContext) || { lang: "es" };
 
   const t = {
-    es: { noNotes: "No hay notas", favorite: "Favorita", completed: "Completada", edit: "Editar", delete: "Eliminar" },
-    en: { noNotes: "No notes", favorite: "Favorite", completed: "Completed", edit: "Edit", delete: "Delete" }
-  }[lang];
+    es: { noNotes: "No hay notas", edit: "Editar", delete: "Eliminar" },
+    en: { noNotes: "No notes", edit: "Edit", delete: "Delete" }
+  }[lang || "es"];
 
-  const filtered = notes.filter(note => {
-    const kw = filters.keyword?.toLowerCase() || "";
-    return (note.title.toLowerCase().includes(kw) || note.content.toLowerCase().includes(kw)) &&
-           (filters.favorite ? note.favorite : true) &&
-           (filters.completed ? note.completed : true);
-  });
+  const token = localStorage.getItem("token");
 
   const handleDelete = async (id) => {
-    if (!token) return;
-    await axios.delete(`${BASE_URL}/notes/${id}`, { headers: { Authorization: `Bearer ${token}` } });
-    fetchNotes();
+    try {
+      await axios.delete(`${BASE_URL}/notes/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchNotes();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const toggleField = async (note, field) => {
-    if (!token) return;
-    const payload = { ...note, [field]: !note[field] };
-    await axios.put(`${BASE_URL}/notes/${note.id}`, payload, { headers: { Authorization: `Bearer ${token}` } });
-    fetchNotes();
+  const handleToggleFavorite = async (note) => {
+    try {
+      await axios.put(
+        `${BASE_URL}/notes/${note._id}`,
+        { favorite: !note.favorite },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchNotes();
+    } catch (err) {
+      console.error(err);
+    }
   };
+
+  const handleToggleCompleted = async (note) => {
+    try {
+      await axios.put(
+        `${BASE_URL}/notes/${note._id}`,
+        { completed: !note.completed },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchNotes();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const filteredNotes = notes.filter((note) => {
+    return (
+      note.content.toLowerCase().includes(filters.keyword.toLowerCase()) &&
+      (!filters.favorite || note.favorite) &&
+      (!filters.completed || note.completed)
+    );
+  });
+
+  if (filteredNotes.length === 0) {
+    return <p className="text-center text-gray-500">{t.noNotes}</p>;
+  }
 
   return (
-    <div className="flex flex-col gap-3">
-      {filtered.length === 0 && <div className="text-center text-gray-500">{t.noNotes}</div>}
-      {filtered.map(note => (
-        <div key={note.id} className="p-4 bg-white dark:bg-gray-800 rounded shadow flex justify-between items-start md:items-center gap-3">
-          <div>
-            <h3 className="font-bold">{note.title}</h3>
-            <p>{note.content}</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{note.category}</p>
-          </div>
-          <div className="flex flex-row md:flex-col items-center gap-2">
-            <button onClick={() => toggleField(note, "favorite")} className="flex items-center gap-1 font-semibold cursor-pointer">
-              <FaStar className={note.favorite ? "text-yellow-400" : ""} /> <span className="hidden md:inline cursor-pointer">{t.favorite}</span>
+    <div className="grid gap-3">
+      {filteredNotes.map((note) => (
+        <div
+          key={note._id}
+          className="p-3 border rounded shadow-sm flex justify-between items-center dark:bg-gray-800"
+        >
+          <span className={`${note.completed ? "line-through text-gray-400" : ""}`}>
+            {note.content}
+          </span>
+          <div className="flex gap-3">
+            <button onClick={() => handleToggleFavorite(note)} title="Favorito">
+              <FaStar className={note.favorite ? "text-yellow-500 cursor-pointer" : "text-gray-400 cursor-pointer"} />
             </button>
-            <button onClick={() => toggleField(note, "completed")} className="flex items-center gap-1">
-              <FaCheck className={note.completed ? "text-green-500 font-semibold cursor-pointer" : ""} /> <span className="hidden md:inline">{t.completed}</span>
+            <button onClick={() => handleToggleCompleted(note)} title="Completado">
+              <FaCheck className={note.completed ? "text-green-500 font-semibold cursor-pointer" : "text-gray-400 font-semibold cursor-pointer"} />
             </button>
-            <button onClick={() => setNoteToEdit(note)} className="text-blue-500 hover:text-blue-700 font-semibold cursor-pointer"><FaEdit /></button>
-            <button onClick={() => handleDelete(note.id)} className="text-red-500 hover:text-red-700 font-semibold cursor-pointer"><FaTrash /></button>
+            <button onClick={() => setNoteToEdit(note)} title={t.edit}>
+              <FaEdit className="text-blue-500 font-semibold cursor-pointer" />
+            </button>
+            <button onClick={() => handleDelete(note._id)} title={t.delete}>
+              <FaTrash className="text-red-500 font-semibold cursor-pointer" />
+            </button>
           </div>
         </div>
       ))}
