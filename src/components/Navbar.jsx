@@ -51,13 +51,13 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
     <nav className="bg-white dark:bg-gray-800 shadow p-4">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="font-bold text-xl shadow-2xs shadow-fuchsia-800">😃 Nota Loka</div>
+        <div className="font-bold text-xl shadow-2xl shadow-fuchsia-800">😃 Nota Loka</div>
 
         {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-4">
           {/* Search */}
           <div className="relative">
-            <FaSearch className="absolute left-2 top-2 text-gray-400" />
+            <FaSearch className="absolute left-2 top-2 text-gray-400 cursor-pointer" />
             <input
               className="pl-8 pr-3 py-1 rounded border dark:bg-gray-700 dark:text-white font-semibold"
               placeholder={t.search}
@@ -71,17 +71,17 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
           </button>
 
-          <button onClick={toggleLang} className="flex items-center gap-2 hover:underline font-semibold cursor-pointer">
+          <button onClick={toggleLang} className="flex items-center gap-2 hover:underline font-bold cursor-pointer">
             🌐 {t.lang}
           </button>
 
-          <button onClick={openAbout} className="flex items-center gap-2 hover:underline font-semibold cursor-pointer">
+          <button onClick={openAbout} className="flex items-center gap-2 hover:underline font-bold cursor-pointer">
             <FaInfoCircle /> {t.about}
           </button>
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 hover:underline text-red-500 font-semibold cursor-pointer"
+            className="flex items-center gap-2 hover:underline text-red-500 font-bold cursor-pointer"
           >
             <FaSignOutAlt /> {t.logout}
           </button>
@@ -118,15 +118,15 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
               {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
             </button>
 
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="flex items-center gap-2 font-semibold cursor-pointer">
+            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="flex items-center gap-2 font-bold cursor-pointer">
               🌐 {t.lang}
             </button>
 
-            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="flex items-center gap-2 font-semibold cursor-pointer">
+            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="flex items-center gap-2 font-bold cursor-pointer">
               <FaInfoCircle /> {t.about}
             </button>
 
-            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="flex items-center gap-2 text-red-500 font-semibold cursor-pointer">
+            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="flex items-center gap-2 text-red-500 font-bold cursor-pointer">
               <FaSignOutAlt /> {t.logout}
             </button>
           </div>

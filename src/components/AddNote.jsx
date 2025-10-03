@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaRegSmile } from "react-icons/fa";
-import Picker from "emoji-picker-react";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
-function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
+function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [favorite, setFavorite] = useState(false);
   const [completed, setCompleted] = useState(false);
-  const [showEmoji, setShowEmoji] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     if (noteToEdit) {
@@ -24,10 +20,32 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
     }
   }, [noteToEdit]);
 
-  const t = {
-    es: { title: "Título", content: "Contenido", category: "Categoría", favorite: "Favorita", completed: "Completada", add: "Agregar", update: "Actualizar", clear: "Limpiar" },
-    en: { title: "Title", content: "Content", category: "Category", favorite: "Favorite", completed: "Completed", add: "Add", update: "Update", clear: "Clear" }
-  }[lang];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const noteData = { title, content, category, favorite, completed };
+
+      if (noteToEdit) {
+        await axios.put(`${BASE_URL}/notes/${noteToEdit._id}`, noteData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setNoteToEdit(null);
+      } else {
+        await axios.post(`${BASE_URL}/notes`, noteData, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+
+      // Reset fields
+      handleClear();
+      fetchNotes();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleClear = () => {
     setTitle("");
@@ -35,51 +53,76 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
     setCategory("");
     setFavorite(false);
     setCompleted(false);
-    setError("");
     setNoteToEdit(null);
   };
 
-  const onEmojiClick = (event, emojiObject) => {
-    setContent(prev => prev + emojiObject.emoji);
-    setShowEmoji(false);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    const token = localStorage.getItem("token");
-    if (!token) { setError(lang === "es" ? "Usuario no autenticado" : "User not authenticated"); return; }
-    if (!title || !content) { setError(lang === "es" ? "Título y contenido requeridos" : "Title and content required"); return; }
-
-    try {
-      const payload = { title, content, category, favorite, completed };
-      if (noteToEdit) {
-        await axios.put(`${BASE_URL}/notes/${noteToEdit.id}`, payload, { headers: { Authorization: `Bearer ${token}` } });
-      } else {
-        await axios.post(`${BASE_URL}/notes`, payload, { headers: { Authorization: `Bearer ${token}` } });
-      }
-      handleClear();
-      fetchNotes();
-    } catch (err) {
-      setError(err.response?.data?.error || "Error");
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-4 rounded shadow flex flex-col gap-2">
-      {error && <div className="text-red-500">{error}</div>}
-      <input value={title} onChange={e => setTitle(e.target.value)} placeholder={t.title} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
-      <textarea value={content} onChange={e => setContent(e.target.value)} placeholder={t.content} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
-      <input value={category} onChange={e => setCategory(e.target.value)} placeholder={t.category} className="p-2 rounded border dark:bg-gray-700 dark:text-white cursor-text" />
-      <div className="flex items-center gap-3">
-        <label><input type="checkbox" checked={favorite} onChange={() => setFavorite(!favorite)} /> {t.favorite}</label>
-        <label><input type="checkbox" checked={completed} onChange={() => setCompleted(!completed)} /> {t.completed}</label>
-        <button type="button" onClick={() => setShowEmoji(!showEmoji)} className="text-yellow-400"><FaRegSmile /></button>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 p-4 border rounded dark:bg-gray-800">
+      {/* Título */}
+      <input
+        type="text"
+        placeholder="📌 Título"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="border rounded px-3 py-2 dark:bg-gray-700 dark:text-white"
+        required
+      />
+
+      {/* Contenido */}
+      <textarea
+        placeholder="📝 Contenido"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        className="border rounded px-3 py-2 dark:bg-gray-700 dark:text-white"
+        rows={3}
+        required
+      />
+
+      {/* Categoría */}
+      <input
+        type="text"
+        placeholder="🏷️ Categoría"
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className="border rounded px-3 py-2 dark:bg-gray-700 dark:text-white"
+      />
+
+      {/* Opciones */}
+      <div className="flex gap-4 items-center">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={favorite}
+            onChange={() => setFavorite(!favorite)}
+          />
+          ⭐ Favorito
+        </label>
+
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={completed}
+            onChange={() => setCompleted(!completed)}
+          />
+          ✅ Completada
+        </label>
       </div>
-      {showEmoji && <Picker onEmojiClick={onEmojiClick} />}
-      <div className="flex gap-2">
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded font-semibold cursor-pointer">{noteToEdit ? t.update : t.add}</button>
-        <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-700 text-white p-2 rounded font-semibold cursor-pointer">{t.clear}</button>
+
+      {/* Botones */}
+      <div className="flex gap-3">
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-800 font-black cursor-pointer"
+        >
+          {noteToEdit ? "Actualizar ✏️" : "Agregar ➕"}
+        </button>
+        <button
+          type="button"
+          onClick={handleClear}
+          className="px-4 py-2 bg-gray-500 text-white font-semibold rounded hover:bg-gray-700 cursor-pointer"
+        >
+          Limpiar 🧹
+        </button>
       </div>
     </form>
   );
