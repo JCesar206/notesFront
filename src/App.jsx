@@ -7,13 +7,13 @@ import Footer from "./components/Footer";
 import axios from "axios";
 import { LangContext } from "./contexts/LangContext";
 import { ThemeContext } from "./contexts/ThemeContext";
-import "./App.css";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
 function App({ setIsAuth }) {
   const { lang } = useContext(LangContext);
   const { darkMode } = useContext(ThemeContext);
+
   const [notes, setNotes] = useState([]);
   const [filters, setFilters] = useState({ keyword: "", favorite: false, completed: false });
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -25,23 +25,14 @@ function App({ setIsAuth }) {
     try {
       const res = await axios.get(`${BASE_URL}/notes`, { headers: { Authorization: `Bearer ${token}` } });
       setNotes(res.data);
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) { console.error(err); }
   };
 
-  useEffect(() => {
-    fetchNotes();
-  }, []);
+  useEffect(() => { fetchNotes(); }, []);
 
   return (
     <div className={`${darkMode ? "dark bg-gray-900 text-white" : "bg-gray-100 text-black"} min-h-screen`}>
-      <Navbar
-        filters={filters}
-        setFilters={setFilters}
-        openAbout={() => setAboutOpen(true)}
-        setIsAuth={setIsAuth}
-      />
+      <Navbar filters={filters} setFilters={setFilters} openAbout={() => setAboutOpen(true)} setIsAuth={setIsAuth} />
       <div className="container mx-auto p-4 flex flex-col gap-4">
         <AddNote fetchNotes={fetchNotes} noteToEdit={noteToEdit} setNoteToEdit={setNoteToEdit} lang={lang} />
         <NotesList notes={notes} fetchNotes={fetchNotes} filters={filters} setNoteToEdit={setNoteToEdit} lang={lang} />
