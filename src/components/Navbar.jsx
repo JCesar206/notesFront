@@ -3,7 +3,8 @@ import {
   FaMoon, FaSun, FaBars, FaTimes,
   FaStar, FaCheckCircle, FaInfoCircle, FaSignOutAlt, FaLanguage
 } from "react-icons/fa";
-import { LangContext, ThemeContext } from "../App";
+import { LangContext } from "../contexts/LangContext";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
   const { lang, toggleLang } = useContext(LangContext);
