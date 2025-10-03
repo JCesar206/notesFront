@@ -11,6 +11,7 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
   const [category, setCategory] = useState(noteToEdit?.category || "");
   const [favorite, setFavorite] = useState(noteToEdit?.favorite || false);
   const [completed, setCompleted] = useState(noteToEdit?.completed || false);
+  const [emoji, setEmoji] = useState(noteToEdit?.emoji || "📝"); // ✅ valor por defecto
   const [showEmoji, setShowEmoji] = useState(false);
   const [error, setError] = useState("");
 
@@ -20,6 +21,7 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
     setCategory(noteToEdit?.category || "");
     setFavorite(noteToEdit?.favorite || false);
     setCompleted(noteToEdit?.completed || false);
+    setEmoji(noteToEdit?.emoji || "📝"); // ✅ lo toma del edit o usa default
   }, [noteToEdit]);
 
   const t = {
@@ -33,14 +35,15 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
     setCategory("");
     setFavorite(false);
     setCompleted(false);
+    setEmoji("📝"); // ✅ resetea el emoji
     setError("");
     setNoteToEdit(null);
     const el = document.getElementById("titleInput");
     if (el) el.focus();
   };
 
-  const onEmojiClick = (event, emojiObject) => {
-    setContent(prev => prev + emojiObject.emoji);
+  const onEmojiClick = (emojiData) => {
+    setEmoji(emojiData.emoji); // ✅ asigna directamente el emoji
     setShowEmoji(false);
   };
 
@@ -53,9 +56,17 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
 
     try {
       if (noteToEdit) {
-        await axios.put(`${BASE_URL}/notes/${noteToEdit.id}`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.put(
+          `${BASE_URL}/notes/${noteToEdit.id}`,
+          { title, content, category, favorite, completed, emoji }, // ✅ incluye emoji
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       } else {
-        await axios.post(`${BASE_URL}/notes`, { title, content, category, favorite, completed }, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(
+          `${BASE_URL}/notes`,
+          { title, content, category, favorite, completed, emoji }, // ✅ incluye emoji
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
       }
       handleClear();
       fetchNotes();
@@ -70,12 +81,19 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit, lang }) {
       <input id="titleInput" value={title} onChange={(e)=>setTitle(e.target.value)} placeholder={t.title} className="p-2 rounded border dark:bg-gray-700 dark:text-white font-semibold cursor-text" />
       <textarea value={content} onChange={(e)=>setContent(e.target.value)} placeholder={t.content} className="p-2 rounded border dark:bg-gray-700 dark:text-white font-semibold cursor-text" />
       <input value={category} onChange={(e)=>setCategory(e.target.value)} placeholder={t.category} className="p-2 rounded border dark:bg-gray-700 dark:text-white font-semibold cursor-text" />
-      <div className="flex items-center gap-3">
-        <label className="flex items-center gap-1"><input type="checkbox" checked={favorite} onChange={()=>setFavorite(!favorite)} /> {t.favorite}</label>
-        <label className="flex items-center gap-1"><input type="checkbox" checked={completed} onChange={()=>setCompleted(!completed)} /> {t.completed}</label>
+      
+      {/* Vista previa del emoji */}
+      <div className="flex items-center gap-2">
+        <span className="text-2xl">{emoji}</span>
         <button type="button" onClick={()=>setShowEmoji(!showEmoji)} className="text-yellow-400 cursor-pointer"><FaRegSmile /></button>
       </div>
       {showEmoji && <Picker onEmojiClick={onEmojiClick} />}
+
+      <div className="flex items-center gap-3">
+        <label className="flex items-center gap-1"><input type="checkbox" checked={favorite} onChange={()=>setFavorite(!favorite)} /> {t.favorite}</label>
+        <label className="flex items-center gap-1"><input type="checkbox" checked={completed} onChange={()=>setCompleted(!completed)} /> {t.completed}</label>
+      </div>
+      
       <div className="flex gap-2">
         <button type="submit" className="bg-blue-500 hover:bg-blue-800 text-white font-semibold p-2 rounded cursor-pointer">{noteToEdit ? t.update : t.add}</button>
         <button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-800 text-white font-semibold p-2 rounded cursor-pointer">{t.clear}</button>

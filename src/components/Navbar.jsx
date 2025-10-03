@@ -1,5 +1,8 @@
 import React, { useState, useContext } from "react";
-import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaMoon, FaSun, FaBars, FaTimes,
+  FaStar, FaCheckCircle, FaInfoCircle, FaSignOutAlt, FaLanguage
+} from "react-icons/fa";
 import { LangContext, ThemeContext } from "../App";
 
 function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
@@ -12,99 +15,79 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
     setIsAuth(false);
   };
 
+  const menuItems = [
+    {
+      label: lang === "es" ? "Favoritos" : "Favorites",
+      icon: <FaStar />,
+      action: () => setFilters({ ...filters, favorite: !filters.favorite }),
+    },
+    {
+      label: lang === "es" ? "Completadas" : "Completed",
+      icon: <FaCheckCircle />,
+      action: () => setFilters({ ...filters, completed: !filters.completed }),
+    },
+    {
+      label: darkMode ? "Light" : "Dark",
+      icon: darkMode ? <FaSun /> : <FaMoon />,
+      action: toggleTheme,
+    },
+    {
+      label: lang === "es" ? "EN" : "ES",
+      icon: <FaLanguage />,
+      action: toggleLang,
+    },
+    {
+      label: lang === "es" ? "Acerca" : "About",
+      icon: <FaInfoCircle />,
+      action: openAbout,
+    },
+    {
+      label: lang === "es" ? "Cerrar sesión" : "Logout",
+      icon: <FaSignOutAlt />,
+      action: handleLogout,
+    },
+  ];
+
   return (
-    <nav className={`bg-white dark:bg-gray-800 shadow p-4`}>
+    <nav className="bg-white dark:bg-gray-800 shadow p-4">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Logo / Título */}
-        <div className="font-bold text-xl">😃 Nota Loka</div>
+        <div className="font-bold text-xl">NotesApp</div>
 
         {/* Menú horizontal en pantallas grandes */}
-        <ul className="hidden md:flex gap-4 items-center">
-          <li>
-            <button
-              onClick={() => setFilters({ ...filters, favorite: !filters.favorite })}
-              className="hover:underline font-bold cursor-pointer"
-            >
-              {lang === "es" ? "Favoritos" : "Favorites"}
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => setFilters({ ...filters, completed: !filters.completed })}
-              className="hover:underline font-bold cursor-pointer"
-            >
-              {lang === "es" ? "Completadas" : "Completed"}
-            </button>
-          </li>
-          <li>
-            <button onClick={toggleTheme} className="flex items-center gap-1 cursor-pointer">
-              {darkMode ? <FaSun /> : <FaMoon />}
-            </button>
-          </li>
-          <li>
-            <button onClick={toggleLang}>
-              {lang === "es" ? "EN" : "ES"}
-            </button>
-          </li>
-          <li>
-            <button onClick={openAbout} className="font-bold cursor-pointer">
-              {lang === "es" ? "Acerca" : "About"}
-            </button>
-          </li>
-          <li>
-            <button onClick={handleLogout} className="text-red-500 hover:underline font-bold cursor-pointer">
-              {lang === "es" ? "Cerrar sesión" : "Logout"}
-            </button>
-          </li>
+        <ul className="hidden md:flex gap-6 items-center">
+          {menuItems.map((item, i) => (
+            <li key={i}>
+              <button
+                onClick={item.action}
+                className="flex items-center gap-1 hover:underline cursor-pointer"
+              >
+                {item.icon} {item.label}
+              </button>
+            </li>
+          ))}
         </ul>
 
-        {/* Menú hamburguesa en pantallas pequeñas */}
+        {/* Menú hamburguesa en pantallas chicas */}
         <div className="md:hidden">
-          <button onClick={() => setMenuOpen(!menuOpen)}>
+          <button onClick={() => setMenuOpen(!menuOpen)} className="cursor-pointer">
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
       </div>
 
-      {/* Menú vertical desplegable */}
+      {/* Menú vertical para pantallas chicas */}
       {menuOpen && (
         <ul className="flex flex-col gap-2 mt-2 md:hidden p-2 bg-white dark:bg-gray-800">
-          <li>
-            <button
-              onClick={() => { setFilters({ ...filters, favorite: !filters.favorite }); setMenuOpen(false); }}
-              className="w-full text-left hover:underline font-bold cursor-pointer"
-            >
-              {lang === "es" ? "Favoritos" : "Favorites"}
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => { setFilters({ ...filters, completed: !filters.completed }); setMenuOpen(false); }}
-              className="w-full text-left hover:underline font-bold cursor-pointer"
-            >
-              {lang === "es" ? "Completadas" : "Completed"}
-            </button>
-          </li>
-          <li>
-            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="flex items-center gap-1 cursor-pointer">
-              {darkMode ? <FaSun /> : <FaMoon />}
-            </button>
-          </li>
-          <li>
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="font-bold cursor-pointer">
-              {lang === "es" ? "EN" : "ES"}
-            </button>
-          </li>
-          <li>
-            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="font-bold cursor-pointer">
-              {lang === "es" ? "Acerca" : "About"}
-            </button>
-          </li>
-          <li>
-            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="text-red-500 hover:underline font-bold cursor-pointer">
-              {lang === "es" ? "Cerrar sesión" : "Logout"}
-            </button>
-          </li>
+          {menuItems.map((item, i) => (
+            <li key={i}>
+              <button
+                onClick={() => { item.action(); setMenuOpen(false); }}
+                className="w-full flex items-center gap-2 hover:underline cursor-pointer"
+              >
+                {item.icon} {item.label}
+              </button>
+            </li>
+          ))}
         </ul>
       )}
     </nav>

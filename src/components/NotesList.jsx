@@ -22,40 +22,110 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit, lang }) {
 
   const handleDelete = async (id) => {
     if (!token) return;
-    try { await axios.delete(`${BASE_URL}/notes/${id}`, { headers: { Authorization: `Bearer ${token}` } }); fetchNotes(); }
-    catch (err) { console.error(err); }
+    try {
+      await axios.delete(`${BASE_URL}/notes/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      fetchNotes();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const toggleFavorite = async (note) => {
     if (!token) return;
-    try { await axios.put(`${BASE_URL}/notes/${note.id}`, { ...note, favorite: !note.favorite }, { headers: { Authorization: `Bearer ${token}` } }); fetchNotes(); }
-    catch (err) { console.error(err); }
+    try {
+      await axios.put(
+        `${BASE_URL}/notes/${note.id}`,
+        { ...note, favorite: !note.favorite },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchNotes();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const toggleCompleted = async (note) => {
     if (!token) return;
-    try { await axios.put(`${BASE_URL}/notes/${note.id}`, { ...note, completed: !note.completed }, { headers: { Authorization: `Bearer ${token}` } }); fetchNotes(); }
-    catch (err) { console.error(err); }
+    try {
+      await axios.put(
+        `${BASE_URL}/notes/${note.id}`,
+        { ...note, completed: !note.completed },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      fetchNotes();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <div className="flex flex-col gap-3">
-      {filtered.length === 0 && <div className="text-center font-semibold text-gray-500">{t.thereAreNotNotes}</div>}
-      {filtered.map(note => (
-        <div key={note.id} className="p-4 bg-white dark:bg-gray-800 rounded shadow flex flex-col md:flex-row justify-between gap-3">
-          <div>
-            <h3 className="font-bold">{note.title}</h3>
-            <p>{note.content}</p>
-            <p className="text-sm text-gray-500 font-semibold dark:text-gray-400">{note.category}</p>
-          </div>
-          <div className="flex flex-row md:flex-col items-center gap-2">
-            <button onClick={() => toggleFavorite(note)} className="flex items-center gap-1 cursor-pointer">{note.favorite ? <FaStar className="text-yellow-400 hover:text-yellow-600" /> : <FaStar />} <span className="hidden md:inline font-semibold">{t.favorite}</span></button>
-            <button onClick={() => toggleCompleted(note)} className="flex items-center gap-1 cursor-pointer">{note.completed ? <FaCheck className="text-green-500 hover:text-green-700" /> : <FaCheck />} <span className="hidden md:inline font-semibold">{t.completed}</span></button>
-            <button onClick={() => setNoteToEdit(note)} className="text-blue-500 hover:text-blue-700 cursor-pointer"><FaEdit /></button>
-            <button onClick={() => handleDelete(note.id)} className="text-red-500 hover:text-red-700 cursor-pointer"><FaTrash /></button>
-          </div>
+      {filtered.length === 0 && (
+        <div className="text-center font-semibold text-gray-500">
+          {t.thereAreNotNotes}
         </div>
-      ))}
+      )}
+      {filtered.map(note => {
+        const emoji = note.emoji || "📝"; // 👈 siempre asegura que haya un emoji
+        return (
+          <div
+            key={note.id}
+            className="p-4 bg-white dark:bg-gray-800 rounded shadow flex flex-col md:flex-row justify-between gap-3"
+          >
+            <div>
+              <h3 className="font-bold flex items-center gap-2">
+                <span>{emoji}</span> {note.title}
+              </h3>
+              <p>{note.content}</p>
+              <p className="text-sm text-gray-500 font-semibold dark:text-gray-400">
+                {note.category}
+              </p>
+            </div>
+            <div className="flex flex-row md:flex-col items-center gap-2">
+              <button
+                onClick={() => toggleFavorite(note)}
+                className="flex items-center gap-1 cursor-pointer"
+              >
+                {note.favorite ? (
+                  <FaStar className="text-yellow-400 hover:text-yellow-600" />
+                ) : (
+                  <FaStar />
+                )}
+                <span className="hidden md:inline font-semibold">
+                  {t.favorite}
+                </span>
+              </button>
+              <button
+                onClick={() => toggleCompleted(note)}
+                className="flex items-center gap-1 cursor-pointer"
+              >
+                {note.completed ? (
+                  <FaCheck className="text-green-500 hover:text-green-700" />
+                ) : (
+                  <FaCheck />
+                )}
+                <span className="hidden md:inline font-semibold">
+                  {t.completed}
+                </span>
+              </button>
+              <button
+                onClick={() => setNoteToEdit(note)}
+                className="text-blue-500 hover:text-blue-700 cursor-pointer"
+              >
+                <FaEdit />
+              </button>
+              <button
+                onClick={() => handleDelete(note.id)}
+                className="text-red-500 hover:text-red-700 cursor-pointer"
+              >
+                <FaTrash />
+              </button>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
