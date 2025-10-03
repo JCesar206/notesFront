@@ -14,17 +14,18 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
 
   const [content, setContent] = useState("");
 
-  useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  // Si hay nota a editar, cargamos los datos
+  React.useEffect(() => {
     if (noteToEdit) {
       setContent(noteToEdit.content);
     }
   }, [noteToEdit]);
 
+  // Guardar o actualizar nota
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
     try {
       if (noteToEdit) {
         await axios.put(
@@ -42,6 +43,7 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
       }
       setContent("");
       fetchNotes();
+      handleClear();
     } catch (err) {
       console.error(err);
     }

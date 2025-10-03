@@ -15,7 +15,7 @@ function AboutModal({ close }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 rounded">
       <div className="bg-white dark:bg-gray-800 rounded border-0 border-b-purple-400 shadow max-w-md w-full p-6 text-center">
         <img src="./myPhoto.jpg" alt="Foto Profesional" className="w-32 h-32 object-cover rounded-full mx-auto mb-4" />
-        <h2 className="text-xl font-bold mb-2">{t.title}</h2>
+        <h2 className="text-xl font-bold mb-2">😱 {t.title}</h2>
         <p className="mb-4 font-semibold">{t.text}</p>
         <div className="mb-4">
           <h3 className="font-semibold">{t.tech}:</h3>
