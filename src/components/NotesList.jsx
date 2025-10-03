@@ -8,124 +8,52 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit, lang }) {
   const token = localStorage.getItem("token");
 
   const t = {
-    es: { thereAreNotNotes: "No hay notas", favorite: "Favorita", completed: "Completada", edit: "Editar", del: "Eliminar" },
-    en: { thereAreNotNotes: "There are not notes", favorite: "Favorite", completed: "Completed", edit: "Edit", del: "Delete" }
+    es: { noNotes: "No hay notas", favorite: "Favorita", completed: "Completada", edit: "Editar", delete: "Eliminar" },
+    en: { noNotes: "No notes", favorite: "Favorite", completed: "Completed", edit: "Edit", delete: "Delete" }
   }[lang];
 
   const filtered = notes.filter(note => {
     const kw = filters.keyword?.toLowerCase() || "";
-    const matchesKeyword = note.title.toLowerCase().includes(kw) || note.content.toLowerCase().includes(kw);
-    const matchesFavorite = filters.favorite ? note.favorite : true;
-    const matchesCompleted = filters.completed ? note.completed : true;
-    return matchesKeyword && matchesFavorite && matchesCompleted;
+    return (note.title.toLowerCase().includes(kw) || note.content.toLowerCase().includes(kw)) &&
+           (filters.favorite ? note.favorite : true) &&
+           (filters.completed ? note.completed : true);
   });
 
   const handleDelete = async (id) => {
     if (!token) return;
-    try {
-      await axios.delete(`${BASE_URL}/notes/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      fetchNotes();
-    } catch (err) {
-      console.error(err);
-    }
+    await axios.delete(`${BASE_URL}/notes/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+    fetchNotes();
   };
 
-  const toggleFavorite = async (note) => {
+  const toggleField = async (note, field) => {
     if (!token) return;
-    try {
-      await axios.put(
-        `${BASE_URL}/notes/${note.id}`,
-        { ...note, favorite: !note.favorite },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      fetchNotes();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const toggleCompleted = async (note) => {
-    if (!token) return;
-    try {
-      await axios.put(
-        `${BASE_URL}/notes/${note.id}`,
-        { ...note, completed: !note.completed },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      fetchNotes();
-    } catch (err) {
-      console.error(err);
-    }
+    const payload = { ...note, [field]: !note[field] };
+    await axios.put(`${BASE_URL}/notes/${note.id}`, payload, { headers: { Authorization: `Bearer ${token}` } });
+    fetchNotes();
   };
 
   return (
     <div className="flex flex-col gap-3">
-      {filtered.length === 0 && (
-        <div className="text-center font-semibold text-gray-500">
-          {t.thereAreNotNotes}
-        </div>
-      )}
-      {filtered.map(note => {
-        const emoji = note.emoji || "📝"; // 👈 siempre asegura que haya un emoji
-        return (
-          <div
-            key={note.id}
-            className="p-4 bg-white dark:bg-gray-800 rounded shadow flex flex-col md:flex-row justify-between gap-3"
-          >
-            <div>
-              <h3 className="font-bold flex items-center gap-2">
-                <span>{emoji}</span> {note.title}
-              </h3>
-              <p>{note.content}</p>
-              <p className="text-sm text-gray-500 font-semibold dark:text-gray-400">
-                {note.category}
-              </p>
-            </div>
-            <div className="flex flex-row md:flex-col items-center gap-2">
-              <button
-                onClick={() => toggleFavorite(note)}
-                className="flex items-center gap-1 cursor-pointer"
-              >
-                {note.favorite ? (
-                  <FaStar className="text-yellow-400 hover:text-yellow-600" />
-                ) : (
-                  <FaStar />
-                )}
-                <span className="hidden md:inline font-semibold">
-                  {t.favorite}
-                </span>
-              </button>
-              <button
-                onClick={() => toggleCompleted(note)}
-                className="flex items-center gap-1 cursor-pointer"
-              >
-                {note.completed ? (
-                  <FaCheck className="text-green-500 hover:text-green-700" />
-                ) : (
-                  <FaCheck />
-                )}
-                <span className="hidden md:inline font-semibold">
-                  {t.completed}
-                </span>
-              </button>
-              <button
-                onClick={() => setNoteToEdit(note)}
-                className="text-blue-500 hover:text-blue-700 cursor-pointer"
-              >
-                <FaEdit />
-              </button>
-              <button
-                onClick={() => handleDelete(note.id)}
-                className="text-red-500 hover:text-red-700 cursor-pointer"
-              >
-                <FaTrash />
-              </button>
-            </div>
+      {filtered.length === 0 && <div className="text-center text-gray-500">{t.noNotes}</div>}
+      {filtered.map(note => (
+        <div key={note.id} className="p-4 bg-white dark:bg-gray-800 rounded shadow flex justify-between items-start md:items-center gap-3">
+          <div>
+            <h3 className="font-bold">{note.title}</h3>
+            <p>{note.content}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{note.category}</p>
           </div>
-        );
-      })}
+          <div className="flex flex-row md:flex-col items-center gap-2">
+            <button onClick={() => toggleField(note, "favorite")} className="flex items-center gap-1 font-semibold cursor-pointer">
+              <FaStar className={note.favorite ? "text-yellow-400" : ""} /> <span className="hidden md:inline cursor-pointer">{t.favorite}</span>
+            </button>
+            <button onClick={() => toggleField(note, "completed")} className="flex items-center gap-1">
+              <FaCheck className={note.completed ? "text-green-500 font-semibold cursor-pointer" : ""} /> <span className="hidden md:inline">{t.completed}</span>
+            </button>
+            <button onClick={() => setNoteToEdit(note)} className="text-blue-500 hover:text-blue-700 font-semibold cursor-pointer"><FaEdit /></button>
+            <button onClick={() => handleDelete(note.id)} className="text-red-500 hover:text-red-700 font-semibold cursor-pointer"><FaTrash /></button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
