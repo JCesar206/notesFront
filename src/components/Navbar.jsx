@@ -66,7 +66,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           <button onClick={openAbout} className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer">
             <FaInfoCircle /> {t.about}
           </button>
-          <button onClick={handleLogout} className="flex items-center gap-2 px-3 py-1 rounded hover:underline text-red-500 cursor-pointer">
+          <button onClick={handleLogout} className="flex items-center gap-2 px-3 py-1 rounded hover:underline text-red-500 font-semibold cursor-pointer">
             <FaSignOutAlt /> {t.logout}
           </button>
         </div>
@@ -88,7 +88,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
               <input
                 type="text"
                 placeholder={t.search}
-                className="pl-8 pr-3 py-1 w-full rounded border dark:bg-gray-700 dark:text-white"
+                className="pl-8 pr-3 py-1 w-full rounded border dark:bg-gray-700 dark:text-white font-semibold"
                 value={filters.keyword}
                 onChange={(e) => {
                   setFilters({ ...filters, keyword: e.target.value });
@@ -96,16 +96,16 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
                 }}
               />
             </div>
-            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="text-left cursor-pointer">
+            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="text-left font-semibold cursor-pointer">
               {darkMode ? "Light" : "Dark"}
             </button>
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="text-left cursor-pointer">
+            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="text-left font-semibold cursor-pointer">
               {t.lang}
             </button>
-            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="text-left cursor-pointer">
+            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="text-left font-semibold cursor-pointer">
               {t.about}
             </button>
-            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="text-left text-red-500 cursor-pointer">
+            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="text-left text-red-500 font-semibold cursor-pointer">
               {t.logout}
             </button>
           </div>
