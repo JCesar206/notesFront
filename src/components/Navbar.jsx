@@ -51,7 +51,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
     <nav className="bg-white dark:bg-gray-800 shadow p-4">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="font-bold text-xl shadow-2xl shadow-fuchsia-700">😃 Nota Loka</div>
+        <div className="font-bold text-xl shadow-2xl shadow-violet-800">😃 Nota Loka</div>
 
         {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-4">
@@ -67,7 +67,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           </div>
 
           {/* Opciones */}
-          <button onClick={toggleTheme} className="flex items-center gap-2 hover:underline cursor-pointer">
+          <button onClick={toggleTheme} className="flex items-center gap-2 font-bold hover:underline cursor-pointer">
             {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
           </button>
 

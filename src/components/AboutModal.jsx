@@ -23,7 +23,7 @@ function AboutModal({ close }) {
             <FaReact size={24} title="React" className="text-sky-400 font-semibold hover:text-sky-700" />
             <SiTailwindcss size={24} title="Tailwind CSS" className="text-blue-500 font-semibold hover:text-blue-700" />
             <FaNodeJs size={24} title="Node.js" className="text-green-600 font-semibold hover:text-green-800" />
-            <SiExpress size={24} title="Express" className="text-gray-600 font-semibold hover:text-gray-800" />
+            <SiExpress size={24} title="Express" className="text-gray-600 font-semibold hover:text-gray-800/50" />
             <SiPostgresql size={24} title="Postgre SQL" className="text-indigo-600 font-semibold hover:text-indigo-800" />
           </div>
         </div>
