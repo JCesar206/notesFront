@@ -1,5 +1,13 @@
 import React, { useState, useContext } from "react";
-import { FaBars, FaTimes, FaSun, FaMoon, FaInfoCircle, FaSearch, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBars,
+  FaTimes,
+  FaSun,
+  FaMoon,
+  FaInfoCircle,
+  FaSearch,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { LangContext } from "../contexts/LangContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +27,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
       about: "Acerca de",
       lang: "EN",
       theme: "Tema",
-      logout: "Cerrar sesión"
+      logout: "Cerrar sesión",
     },
     en: {
       add: "Add",
@@ -29,8 +37,8 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
       about: "About",
       lang: "ES",
       theme: "Theme",
-      logout: "Logout"
-    }
+      logout: "Logout",
+    },
   }[lang];
 
   const handleLogout = () => {
@@ -42,31 +50,55 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
   return (
     <nav className="bg-white dark:bg-gray-800 shadow p-4">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <div className="font-bold text-xl shadow-violet-700 shadow-2xl">😃 Nota Loka</div>
+        {/* Logo / Título */}
+        <div className="font-bold text-xl shadow-violet-700 shadow-2xl">
+          😃 Nota Loka
+        </div>
 
         {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-4">
+          {/* Search */}
           <div className="relative">
             <FaSearch className="absolute left-2 top-2 text-gray-400" />
             <input
-              type="text"
-              placeholder={t.search}
               className="pl-8 pr-3 py-1 rounded border dark:bg-gray-700 dark:text-white font-semibold"
+              placeholder={t.search}
               value={filters.keyword}
-              onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
+              onChange={(e) =>
+                setFilters({ ...filters, keyword: e.target.value })
+              }
             />
           </div>
-          <button onClick={toggleTheme} className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer">
+
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer"
+          >
             {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
           </button>
-          <button onClick={toggleLang} className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer">
-            <FaInfoCircle /> {t.lang}
+
+          {/* Lang toggle */}
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer"
+          >
+            🌐 {t.lang}
           </button>
-          <button onClick={openAbout} className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer">
+
+          {/* About */}
+          <button
+            onClick={openAbout}
+            className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer"
+          >
             <FaInfoCircle /> {t.about}
           </button>
-          <button onClick={handleLogout} className="flex items-center gap-2 px-3 py-1 rounded hover:underline text-red-500 cursor-pointer">
+
+          {/* Logout */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-3 py-1 rounded hover:underline text-red-500 cursor-pointer"
+          >
             <FaSignOutAlt /> {t.logout}
           </button>
         </div>
@@ -81,14 +113,18 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className={`md:hidden px-4 pb-4 ${darkMode ? "bg-gray-800" : "bg-white"}`}>
-          <div className="flex flex-col gap-2">
+        <div
+          className={`md:hidden px-4 pb-4 ${
+            darkMode ? "bg-gray-800" : "bg-white"
+          }`}
+        >
+          <div className="flex flex-col gap-3">
+            {/* Search */}
             <div className="relative">
               <FaSearch className="absolute left-2 top-2 text-gray-400" />
               <input
-                type="text"
-                placeholder={t.search}
                 className="pl-8 pr-3 py-1 w-full rounded border dark:bg-gray-700 dark:text-white"
+                placeholder={t.search}
                 value={filters.keyword}
                 onChange={(e) => {
                   setFilters({ ...filters, keyword: e.target.value });
@@ -96,17 +132,49 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
                 }}
               />
             </div>
-            <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="text-left cursor-pointer">
-              {darkMode ? "Light" : "Dark"}
+
+            {/* Theme toggle */}
+            <button
+              onClick={() => {
+                toggleTheme();
+                setMenuOpen(false);
+              }}
+              className="flex items-center gap-2 text-left cursor-pointer"
+            >
+              {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
             </button>
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="text-left cursor-pointer">
-              {t.lang}
+
+            {/* Lang toggle */}
+            <button
+              onClick={() => {
+                toggleLang();
+                setMenuOpen(false);
+              }}
+              className="flex items-center gap-2 text-left cursor-pointer"
+            >
+              🌐 {t.lang}
             </button>
-            <button onClick={() => { openAbout(); setMenuOpen(false); }} className="text-left cursor-pointer">
-              {t.about}
+
+            {/* About */}
+            <button
+              onClick={() => {
+                openAbout();
+                setMenuOpen(false);
+              }}
+              className="flex items-center gap-2 text-left cursor-pointer"
+            >
+              <FaInfoCircle /> {t.about}
             </button>
-            <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="text-left text-red-500 cursor-pointer">
-              {t.logout}
+
+            {/* Logout */}
+            <button
+              onClick={() => {
+                handleLogout();
+                setMenuOpen(false);
+              }}
+              className="flex items-center gap-2 text-left text-red-500 cursor-pointer"
+            >
+              <FaSignOutAlt /> {t.logout}
             </button>
           </div>
         </div>
