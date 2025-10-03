@@ -13,14 +13,13 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
 function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
-  const { lang, toggleLang } = useContext(LangContext);
-  const { darkMode, toggleTheme } = useContext(ThemeContext);
+  const { lang, toggleLang } = useContext(LangContext) || { lang: "es", toggleLang: () => {} };
+  const { darkMode, toggleTheme } = useContext(ThemeContext) || { darkMode: false, toggleTheme: () => {} };
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const t = {
     es: {
-      add: "Agregar",
       search: "Buscar...",
       favorite: "Favoritas",
       completed: "Completadas",
@@ -30,7 +29,6 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
       logout: "Cerrar sesión",
     },
     en: {
-      add: "Add",
       search: "Search...",
       favorite: "Favorites",
       completed: "Completed",
@@ -105,7 +103,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
 
         {/* Mobile hamburger */}
         <div className="md:hidden">
-          <button onClick={() => setMenuOpen(!menuOpen)} aria-label="menu">
+          <button onClick={() => setMenuOpen(!menuOpen)} aria-label="menu" className="cursor-pointer">
             {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
           </button>
         </div>
