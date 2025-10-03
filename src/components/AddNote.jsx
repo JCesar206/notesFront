@@ -102,13 +102,13 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
       </label>
 
       {/* Emojis */}
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {["😀","🔥","✅","😎","⭐","😱","👍","🐶","🐱","❤️","💯","🥺","🤯","😡","🙏","🤗","😍"].map((emoji) => (
           <button
             key={emoji}
             type="button"
             onClick={() => insertEmoji(emoji)}
-            className="px-2 py-1 border rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="px-2 py-1 bg-gray-400 rounded hover:bg-gray-600 dark:hover:bg-gray-800 cursor-pointer"
           >
             {emoji}
           </button>
