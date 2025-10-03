@@ -22,11 +22,12 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow p-4">
+    <nav className={`bg-white dark:bg-gray-800 shadow p-4`}>
       <div className="container mx-auto flex justify-between items-center">
+        {/* Logo */}
         <div className="font-bold text-xl">😃 Nota Loka</div>
 
-        {/* Desktop Menu */}
+        {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-4">
           <div className="relative">
             <FaSearch className="absolute left-2 top-2 text-gray-400" />
@@ -37,7 +38,6 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
               onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
             />
           </div>
-
           <button onClick={toggleTheme} className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer">
             {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
           </button>
@@ -52,15 +52,15 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           </button>
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile menu */}
         <div className="md:hidden">
-          <button onClick={() => setMenuOpen(!menuOpen)} className="cursor-pointer">
+          <button onClick={() => setMenuOpen(!menuOpen)} aria-label="menu">
             {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile dropdown */}
       {menuOpen && (
         <div className={`md:hidden px-4 pb-4 ${darkMode ? "bg-gray-800" : "bg-white"}`}>
           <div className="flex flex-col gap-2">
@@ -70,13 +70,48 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
                 className="pl-8 pr-3 py-1 w-full rounded border dark:bg-gray-700 dark:text-white"
                 placeholder={t.search}
                 value={filters.keyword}
-                onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
+                onChange={(e) => {
+                  setFilters({ ...filters, keyword: e.target.value });
+                  setMenuOpen(false);
+                }}
               />
             </div>
-            <button onClick={() => toggleTheme()} className="text-left cursor-pointer">{darkMode ? "Light" : "Dark"}</button>
-            <button onClick={() => toggleLang()} className="text-left cursor-pointer">{t.lang}</button>
-            <button onClick={openAbout} className="text-left cursor-pointer">{t.about}</button>
-            <button onClick={handleLogout} className="text-left text-red-500 cursor-pointer">{t.logout}</button>
+            <button
+              onClick={() => {
+                toggleTheme();
+                setMenuOpen(false);
+              }}
+              className="text-left cursor-pointer"
+            >
+              {darkMode ? "Light" : "Dark"}
+            </button>
+            <button
+              onClick={() => {
+                toggleLang();
+                setMenuOpen(false);
+              }}
+              className="text-left cursor-pointer"
+            >
+              {t.lang}
+            </button>
+            <button
+              onClick={() => {
+                openAbout();
+                setMenuOpen(false);
+              }}
+              className="text-left cursor-pointer"
+            >
+              {t.about}
+            </button>
+            <button
+              onClick={() => {
+                handleLogout();
+                setMenuOpen(false);
+              }}
+              className="text-left text-red-500 cursor-pointer"
+            >
+              {t.logout}
+            </button>
           </div>
         </div>
       )}
