@@ -88,6 +88,16 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
               <FaTrash className="text-red-500 font-semibold cursor-pointer" />
             </button>
           </div>
+          <p
+            className={`${
+              note.completed ? "line-through text-gray-400 font-semibold" : ""
+            }`}
+          >
+            {note.content}
+          </p>
+          <p className="text-sm text-gray-500 mt-1 font-semibold">
+            📂 {note.category || "Sin categoría"}
+          </p>
         </div>
       ))}
     </div>
