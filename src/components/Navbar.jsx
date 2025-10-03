@@ -1,95 +1,183 @@
 import React, { useState, useContext } from "react";
 import {
-  FaMoon, FaSun, FaBars, FaTimes,
-  FaStar, FaCheckCircle, FaInfoCircle, FaSignOutAlt, FaLanguage
+  FaBars,
+  FaTimes,
+  FaSun,
+  FaMoon,
+  FaInfoCircle,
+  FaSearch,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import { LangContext } from "../contexts/LangContext";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
   const { lang, toggleLang } = useContext(LangContext);
   const { darkMode, toggleTheme } = useContext(ThemeContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const t = {
+    es: {
+      add: "Agregar",
+      search: "Buscar...",
+      favorite: "Favoritas",
+      completed: "Completadas",
+      about: "Acerca de",
+      lang: "EN",
+      theme: "Tema",
+      logout: "Cerrar sesión",
+    },
+    en: {
+      add: "Add",
+      search: "Search...",
+      favorite: "Favorites",
+      completed: "Completed",
+      about: "About",
+      lang: "ES",
+      theme: "Theme",
+      logout: "Logout",
+    },
+  }[lang];
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuth(false);
+    navigate("/login");
   };
-
-  const menuItems = [
-    {
-      label: lang === "es" ? "Favoritos" : "Favorites",
-      icon: <FaStar />,
-      action: () => setFilters({ ...filters, favorite: !filters.favorite }),
-    },
-    {
-      label: lang === "es" ? "Completadas" : "Completed",
-      icon: <FaCheckCircle />,
-      action: () => setFilters({ ...filters, completed: !filters.completed }),
-    },
-    {
-      label: darkMode ? "Light" : "Dark",
-      icon: darkMode ? <FaSun /> : <FaMoon />,
-      action: toggleTheme,
-    },
-    {
-      label: lang === "es" ? "EN" : "ES",
-      icon: <FaLanguage />,
-      action: toggleLang,
-    },
-    {
-      label: lang === "es" ? "Acerca" : "About",
-      icon: <FaInfoCircle />,
-      action: openAbout,
-    },
-    {
-      label: lang === "es" ? "Cerrar sesión" : "Logout",
-      icon: <FaSignOutAlt />,
-      action: handleLogout,
-    },
-  ];
 
   return (
     <nav className="bg-white dark:bg-gray-800 shadow p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="font-bold text-xl">NotesApp</div>
+        {/* Logo / Título */}
+        <div className="font-bold text-xl shadow-violet-700 shadow-2xl">
+          😃 Nota Loka
+        </div>
 
-        {/* Menú horizontal en pantallas grandes */}
-        <ul className="hidden md:flex gap-6 items-center">
-          {menuItems.map((item, i) => (
-            <li key={i}>
-              <button
-                onClick={item.action}
-                className="flex items-center gap-1 hover:underline cursor-pointer"
-              >
-                {item.icon} {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+        {/* Desktop menu */}
+        <div className="hidden md:flex items-center gap-4">
+          {/* Search */}
+          <div className="relative">
+            <FaSearch className="absolute left-2 top-2 text-gray-400" />
+            <input
+              className="pl-8 pr-3 py-1 rounded border dark:bg-gray-700 dark:text-white font-semibold"
+              placeholder={t.search}
+              value={filters.keyword}
+              onChange={(e) =>
+                setFilters({ ...filters, keyword: e.target.value })
+              }
+            />
+          </div>
 
-        {/* Menú hamburguesa en pantallas chicas */}
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer"
+          >
+            {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
+          </button>
+
+          {/* Lang toggle */}
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer"
+          >
+            🌐 {t.lang}
+          </button>
+
+          {/* About */}
+          <button
+            onClick={openAbout}
+            className="flex items-center gap-2 px-3 py-1 rounded hover:underline cursor-pointer"
+          >
+            <FaInfoCircle /> {t.about}
+          </button>
+
+          {/* Logout */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-3 py-1 rounded hover:underline text-red-500 cursor-pointer"
+          >
+            <FaSignOutAlt /> {t.logout}
+          </button>
+        </div>
+
+        {/* Mobile hamburger */}
         <div className="md:hidden">
-          <button onClick={() => setMenuOpen(!menuOpen)} className="cursor-pointer">
-            {menuOpen ? <FaTimes /> : <FaBars />}
+          <button onClick={() => setMenuOpen(!menuOpen)} aria-label="menu">
+            {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
           </button>
         </div>
       </div>
 
-      {/* Menú vertical para pantallas chicas */}
+      {/* Mobile menu */}
       {menuOpen && (
-        <ul className="flex flex-col gap-2 mt-2 md:hidden p-2 bg-white dark:bg-gray-800">
-          {menuItems.map((item, i) => (
-            <li key={i}>
-              <button
-                onClick={() => { item.action(); setMenuOpen(false); }}
-                className="w-full flex items-center gap-2 hover:underline cursor-pointer"
-              >
-                {item.icon} {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <div
+          className={`md:hidden px-4 pb-4 ${
+            darkMode ? "bg-gray-800" : "bg-white"
+          }`}
+        >
+          <div className="flex flex-col gap-3">
+            {/* Search */}
+            <div className="relative">
+              <FaSearch className="absolute left-2 top-2 text-gray-400" />
+              <input
+                className="pl-8 pr-3 py-1 w-full rounded border dark:bg-gray-700 dark:text-white"
+                placeholder={t.search}
+                value={filters.keyword}
+                onChange={(e) => {
+                  setFilters({ ...filters, keyword: e.target.value });
+                  setMenuOpen(false);
+                }}
+              />
+            </div>
+
+            {/* Theme toggle */}
+            <button
+              onClick={() => {
+                toggleTheme();
+                setMenuOpen(false);
+              }}
+              className="flex items-center gap-2 text-left cursor-pointer"
+            >
+              {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
+            </button>
+
+            {/* Lang toggle */}
+            <button
+              onClick={() => {
+                toggleLang();
+                setMenuOpen(false);
+              }}
+              className="flex items-center gap-2 text-left cursor-pointer"
+            >
+              🌐 {t.lang}
+            </button>
+
+            {/* About */}
+            <button
+              onClick={() => {
+                openAbout();
+                setMenuOpen(false);
+              }}
+              className="flex items-center gap-2 text-left cursor-pointer"
+            >
+              <FaInfoCircle /> {t.about}
+            </button>
+
+            {/* Logout */}
+            <button
+              onClick={() => {
+                handleLogout();
+                setMenuOpen(false);
+              }}
+              className="flex items-center gap-2 text-left text-red-500 cursor-pointer"
+            >
+              <FaSignOutAlt /> {t.logout}
+            </button>
+          </div>
+        </div>
       )}
     </nav>
   );
