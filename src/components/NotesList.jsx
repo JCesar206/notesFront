@@ -84,7 +84,7 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
             <span className="text-2xl">{getEmoji(note)}</span>
             <div>
               <h3
-                className={`font-bold ${
+                className={`font-semibold ${
                   note.completed ? "line-through text-gray-400" : ""
                 }`}
               >
