@@ -18,9 +18,9 @@ function Footer() {
         <FaEnvelope size={24} title="Hotmail" className="hover:text-lime-500"/>
       </a>
       <a href="mailto:jcesary06@gmail.com" className="flex items-center gap-1">
-        <FaGmail size={24} title="Hotmail" className="hover:text-yellow-500"/>
+        <SiGmail size={24} title="Gmail" className="hover:text-yellow-500"/>
       </a>
-      <span className="w-full text-sm mt-2 text-gray-500">&copy; {new Date().getFullYear()} Nota Loka. 📝 | Juls 😎| All right reserved.</span>
+      <span className="w-full text-sm mt-2 text-gray-500">&copy; {new Date().getFullYear()} 📝 Nota Loka. | Juls 😎| All right reserved.</span>
     </footer>
   );
 }
