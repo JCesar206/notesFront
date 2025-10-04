@@ -71,11 +71,11 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
           </button>
 
-          <button onClick={toggleLang} className="flex items-center gap-2 hover:underline font-bold cursor-pointer">
+          <button onClick={toggleLang} className="flex items-center gap-2 hover:underline cursor-pointer">
             🌐 {t.lang}
           </button>
 
-          <button onClick={openAbout} className="flex items-center gap-2 hover:underline font-bold cursor-pointer">
+          <button onClick={openAbout} className="flex items-center gap-2 hover:underline cursor-pointer">
             <FaInfoCircle /> {t.about}
           </button>
 
@@ -118,7 +118,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
               {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
             </button>
 
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="flex items-center gap-2 font-bold cursor-pointer">
+            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="flex items-center gap-2 cursor-pointer">
               🌐 {t.lang}
             </button>
 
