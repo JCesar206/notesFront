@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { LangContext } from "../contexts/LangContext";
 import { FaReact, FaNodeJs } from "react-icons/fa";
-import { SiTailwindcss, SiExpress, SiPostgresql } from "react-icons/si";
+import { SiTailwindcss, SiPostgresql, SiExpress, SiE } from "react-icons/si";
 
 function AboutModal({ close }) {
   const { lang } = useContext(LangContext);
