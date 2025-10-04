@@ -7,8 +7,8 @@ function AboutModal({ close }) {
   const { lang } = useContext(LangContext);
 
   const t = {
-    es: { title: "Acerca de", text: "Desarrollador: Julio César Yañez M.", close: "Cerrar", tech: "Tecnologías usadas" },
-    en: { title: "About", text: "Developer: Julio César Yañez M.", close: "Close", tech: "Technologies used" }
+    es: { title: "Acerca de", text: "Desarrollador: Julio César Yañez M.", close: "Cerrar", tech: "Tecnologías usadas", text: "App hecha con mucho ❤️" },
+    en: { title: "About", text: "Developer: Julio César Yañez M.", close: "Close", tech: "Technologies used", text: "App made with a lot ❤️" }
   }[lang];
 
   return (
