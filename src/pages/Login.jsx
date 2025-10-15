@@ -48,6 +48,7 @@ function Login({ setIsAuth }) {
           <Link to="/register" className="underline font-semibold cursor-pointer">{t.register}</Link>
           <Link to="/forgot-password" className="underline font-semibold cursor-pointer">{t.forgot}</Link>
         </div>
+        <p className="text-sm font-semibold text-gray-800">Usuario de prueba: usuario@test.com Contraseña: 123456</p>
       </form>
     </div>
   );
