@@ -49,7 +49,7 @@ function App({ setIsAuth }) {
       />
       <div className="container mx-auto p-4 flex flex-col gap-4">
         {/* Botón fijo de whatsapp */}
-        <a href="https://wa.me/5217221828896" target="_blank" className="fixed bottom-10 right-4 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600"><FaWhatsapp size={24}/></a>
+        <a href="https://wa.me/5217221828896" target="_blank" rel="noopener noreferrer" className="fixed bottom-10 right-4 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600"><FaWhatsapp size={24}/></a>
         <AddNote fetchNotes={fetchNotes} noteToEdit={noteToEdit} setNoteToEdit={setNoteToEdit} lang={lang} />
         <NotesList notes={notes} fetchNotes={fetchNotes} filters={filters} setNoteToEdit={setNoteToEdit} lang={lang} />
       </div>
