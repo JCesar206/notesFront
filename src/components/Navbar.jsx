@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { FaBars, FaTimes, FaSun, FaMoon, FaInfoCircle, FaSearch, FaSignOutAlt, FaStar, FaCheck} from "react-icons/fa";
 import { IoLanguageSharp } from "react-icons/io5";
-import { useLanguage } from "../src/context/LanguageContext";
+import { useLanguage } from "../context/LanguageContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { useNavigate } from "react-router-dom";
 

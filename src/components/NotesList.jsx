@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import axios from "axios";
-import { useLanguage } from "../src/context/LanguageContext";
+import { useLanguage } from "../context/LanguageContext";
 import { FaTrash, FaEdit, FaStar, FaCheck } from "react-icons/fa";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
