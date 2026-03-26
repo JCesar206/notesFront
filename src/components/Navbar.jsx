@@ -1,45 +1,15 @@
 import React, { useState, useContext } from "react";
-import {
-  FaBars,
-  FaTimes,
-  FaSun,
-  FaMoon,
-  FaInfoCircle,
-  FaSearch,
-  FaSignOutAlt,
-  FaStar,
-  FaCheck
-} from "react-icons/fa";
-import { LangContext } from "../contexts/LangContext";
+import { FaBars, FaTimes, FaSun, FaMoon, FaInfoCircle, FaSearch, FaSignOutAlt, FaStar, FaCheck} from "react-icons/fa";
+import { IoLanguageSharp } from "react-icons/io5";
+import { useLanguage } from "../src/context/LanguageContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
 function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
-  const { lang, toggleLang } = useContext(LangContext) || { lang: "es", toggleLang: () => {} };
   const { darkMode, toggleTheme } = useContext(ThemeContext) || { darkMode: false, toggleTheme: () => {} };
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-
-  const t = {
-    es: {
-      search: "Buscar...",
-      favorite: "Favoritas",
-      completed: "Completadas",
-      about: "Acerca de",
-      lang: "EN",
-      theme: "Tema",
-      logout: "Cerrar sesión"
-    },
-    en: {
-      search: "Search...",
-      favorite: "Favorites",
-      completed: "Completed",
-      about: "About",
-      lang: "ES",
-      theme: "Theme",
-      logout: "Logout"
-    }
-  }[lang || "es"];
+  const { t } = useLanguage();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -48,10 +18,10 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
   };
 
   return (
-    <nav className="bg-white dark:bg-gray-800 shadow p-4">
+    <nav className="bg-white dark:bg-gray-900 shadow p-4">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="font-semibold text-xl shadow-2xl shadow-violet-800">😃 Nota Loka</div>
+        <div className="font-semibold text-xl shadow-2xl shadow-violet-800">😃 {t.titleApp}</div>
 
         {/* Desktop menu */}
         <div className="hidden md:flex items-center gap-4">
@@ -68,29 +38,29 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
 
           {/* Opciones */}
           <button onClick={toggleTheme} className="flex items-center gap-2 font-semibold hover:underline cursor-pointer">
-            {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
+            {darkMode ? <FaSun size={18}/> : <FaMoon size={18}/>}
           </button>
 
           <button onClick={toggleLang} className="flex items-center gap-2 hover:underline font-semibold cursor-pointer">
-            🌐 {t.lang}
+            <IoLanguageSharp size={18}/>
           </button>
 
           <button onClick={openAbout} className="flex items-center gap-2 hover:underline font-semibold cursor-pointer">
-            <FaInfoCircle /> {t.about}
+            <FaInfoCircle size={18}/> {t.about}
           </button>
 
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 hover:underline text-red-500 font-semibold cursor-pointer"
           >
-            <FaSignOutAlt /> {t.logout}
+            <FaSignOutAlt size={18}/> {t.logout}
           </button>
         </div>
 
         {/* Mobile hamburger */}
         <div className="md:hidden">
           <button onClick={() => setMenuOpen(!menuOpen)} aria-label="menu" className="cursor-pointer">
-            {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+            {menuOpen ? <FaTimes size={22}/> : <FaBars size={22}/>}
           </button>
         </div>
       </div>
@@ -101,7 +71,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           <div className="flex flex-col gap-2">
             {/* Search */}
             <div className="relative">
-              <FaSearch className="absolute left-2 top-2 text-gray-400" />
+              <FaSearch className="absolute left-2 top-2 text-gray-400"/>
               <input
                 className="pl-8 pr-3 py-1 w-full rounded border dark:bg-gray-700 dark:text-white"
                 placeholder={t.search}
@@ -115,19 +85,19 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
 
             {/* Botones */}
             <button onClick={() => { toggleTheme(); setMenuOpen(false); }} className="flex items-center gap-2 cursor-pointer">
-              {darkMode ? <FaSun /> : <FaMoon />} {t.theme}
+              {darkMode ? <FaSun size={18}/> : <FaMoon size={18}/>} {t.theme}
             </button>
 
             <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="flex items-center gap-2 font-semibold cursor-pointer">
-              🌐 {t.lang}
+              <IoLanguageSharp size={18}/>
             </button>
 
             <button onClick={() => { openAbout(); setMenuOpen(false); }} className="flex items-center gap-2 font-semibold cursor-pointer">
-              <FaInfoCircle /> {t.about}
+              <FaInfoCircle size={18}/>
             </button>
 
             <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="flex items-center gap-2 text-red-500 font-semibold cursor-pointer">
-              <FaSignOutAlt /> {t.logout}
+              <FaSignOutAlt size={18}/> {t.logout}
             </button>
           </div>
         </div>

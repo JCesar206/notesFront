@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { useLanguage } from "../context/LanguageContext";
 
 function Logout() {
   const { setToken, setUser } = useContext(AuthContext);
+  const { t } = useLanguage();
 
   const handleLogout = () => {
     setToken(null);
@@ -15,7 +17,7 @@ function Logout() {
       onClick={handleLogout}
       className="bg-red-600 text-white px-4 py-2 rounded font-semibold cursor-pointer"
     >
-      Cerrar sesión
+      {t.logout}
     </button>
   );
 }

@@ -1,18 +1,12 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import axios from "axios";
-import { LangContext } from "../contexts/LangContext";
+import { useLanguage } from "../src/context/LanguageContext";
 import { FaTrash, FaEdit, FaStar, FaCheck } from "react-icons/fa";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
 function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
-  const { lang } = useContext(LangContext) || { lang: "es" };
-
-  const t = {
-    es: { noNotes: "No hay notas", edit: "Editar", delete: "Eliminar" },
-    en: { noNotes: "No notes", edit: "Edit", delete: "Delete" },
-  }[lang || "es"];
-
+  const { t } = useLanguage();
   const token = localStorage.getItem("token");
 
   const handleDelete = async (id) => {

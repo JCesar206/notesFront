@@ -1,13 +1,11 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { LangContext } from "../contexts/LangContext";
+import { useLanguage } from "../context/LanguageContext";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
 function ForgotPassword() {
-  const { lang } = useContext(LangContext);
-  const t = { es:{ email:"Correo", send:"Enviar", success:"Si existe te llegará un correo" }, en:{ email:"Email", send:"Send", success:"If exists you'll receive an email" } }[lang];
+  const { t } = useLanguage();
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -28,9 +26,9 @@ function ForgotPassword() {
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white dark:bg-gray-800 rounded shadow">
       <form onSubmit={submit} className="flex flex-col gap-3">
-        {message && <div className="text-green-500 font-semibold">{message}</div>}
-        {error && <div className="text-red-500 font-semibold">{error}</div>}
-        <input type="email" placeholder={t.email} value={email} onChange={e=>setEmail(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" required />
+        {message && <div className="text-green-500 font-bold">{t.message}</div>}
+        {error && <div className="text-red-500 font-bold">{t.error}</div>}
+        <input type="email" placeholder={t.email} value={email} onChange={e=>setEmail(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" required/>
         <button type="submit" className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold p-2 rounded cursor-pointer">{t.send}</button>
       </form>
     </div>

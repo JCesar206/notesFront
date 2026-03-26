@@ -15,12 +15,12 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to={isAuth ? "/app" : "/login"} />} />
-      <Route path="/login" element={isAuth ? <Navigate to="/app" /> : <Login setIsAuth={setIsAuth} />} />
-      <Route path="/register" element={isAuth ? <Navigate to="/app" /> : <Register />} />
-      <Route path="/forgot-password" element={isAuth ? <Navigate to="/app" /> : <ForgotPassword />} />
-      <Route path="/app" element={isAuth ? <App setIsAuth={setIsAuth} /> : <Navigate to="/login" />} />
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/" element={<Navigate to={isAuth ? "/app" : "/login"} />}/>
+      <Route path="/login" element={isAuth ? <Navigate to="/app"/> : <Login setIsAuth={setIsAuth}/>}/>
+      <Route path="/register" element={isAuth ? <Navigate to="/app"/> : <Register/>}/>
+      <Route path="/forgot-password" element={isAuth ? <Navigate to="/app"/> : <ForgotPassword/>}/>
+      <Route path="/app" element={isAuth ? <App setIsAuth={setIsAuth}/> : <Navigate to="/login"/>}/>
+      <Route path="*" element={<Navigate to="/"/>}/>
     </Routes>
   );
 }

@@ -5,8 +5,8 @@ import NotesList from "./components/NotesList";
 import AboutModal from "./components/AboutModal";
 import Footer from "./components/Footer";
 import axios from "axios";
-import { LangContext } from "./contexts/LangContext";
-import { ThemeContext } from "./contexts/ThemeContext";
+import { LanguageContext } from "../src/contexts/LangContext";
+import { ThemeContext } from "../src/contexts/ThemeContext";
 import "./App.css";
 import { FaWhatsapp } from "react-icons/fa";
 
@@ -14,11 +14,11 @@ const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
 function App({ setIsAuth }) {
   // Consume context con seguridad
-  const langContext = useContext(LangContext);
+  const languageContext = useContext(LanguageContext);
   const themeContext = useContext(ThemeContext);
 
   // Si por alguna razón los contextos no están, asignamos valores por defecto
-  const lang = langContext?.lang || "es";
+  const lang = languageContext?.lang || "es";
   const darkMode = themeContext?.darkMode || false;
 
   const [notes, setNotes] = useState([]);

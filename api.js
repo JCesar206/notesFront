@@ -1,4 +1,3 @@
-// src/api.js
 import axios from "axios";
 
 export const BASE_URL = "https://notesback-7rae.onrender.com/api";

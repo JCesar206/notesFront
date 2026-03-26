@@ -1,19 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import AppRoutes from "./AppRoutes";
-import { LangProvider } from "./contexts/LangContext";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import "./index.css";
+import { ThemeProvider } from "../src/context/ThemeContext";
+import { LanguageProvider } from "../src/context/LanguageContext";
 import { HashRouter } from "react-router-dom";
+import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <LangProvider>
-      <ThemeProvider>
+    <ThemeProvider>
+      <LanguageProvider>
         <HashRouter>
           <AppRoutes />
         </HashRouter>
-      </ThemeProvider>
-    </LangProvider>
+      </LanguageProvider>
+    </ThemeProvider>   
   </React.StrictMode>
 );
