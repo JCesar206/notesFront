@@ -1,20 +1,19 @@
 import { createContext, useContext, useState } from "react";
 import { translations } from "../i18n/translations";
 
-export const LanguageContext = createContext();
+const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState("es");
 
-  const toggleLanguageuage = () => {
+  const toggleLanguage = () => {
     setLanguage((prev) => (prev === "es" ? "en" : "es"));
   };
 
   const t = (key) => translations[language][key] || key;
 
   return (
-    <LanguageContext.Provider
-      value={{ language, toggleLanguageuage, t }}>
+    <LanguageContext.Provider value={{ language, toggleLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
