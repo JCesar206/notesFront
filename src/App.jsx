@@ -5,8 +5,8 @@ import NotesList from "./components/NotesList";
 import AboutModal from "./components/AboutModal";
 import Footer from "./components/Footer";
 import axios from "axios";
-import { LanguageContext } from "../contexts/LangContext";
-import { ThemeContext } from "../contexts/ThemeContext";
+import { LanguageContext } from "./contexts/LangContext";
+import { ThemeContext } from "./contexts/ThemeContext";
 import "./App.css";
 import { FaWhatsapp } from "react-icons/fa";
 
