@@ -2,15 +2,15 @@ import React, { useState, useContext } from "react";
 import { FaBars, FaTimes, FaSun, FaMoon, FaInfoCircle, FaSearch, FaSignOutAlt, FaStar, FaCheck} from "react-icons/fa";
 import { IoLanguageSharp } from "react-icons/io5";
 import { useLanguage } from "../context/LanguageContext";
-import { ThemeContext } from "../context/ThemeContext";
+import { useTheme } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
 function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
-  const { darkMode, toggleTheme } = useContext(ThemeContext) || { darkMode: false, toggleTheme: () => {} };
+  const { darkMode, toggleTheme } = useContext(useTheme) || { darkMode: false, toggleTheme: () => {} };
+  const { t } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const { t } = useLanguage();
-
+  
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuth(false);
