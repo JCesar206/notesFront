@@ -1,4 +1,4 @@
-import { useContext } from "react";
+/* jsx id="n0xg6o" */
 import { useLanguage } from "../context/LanguageContext";
 import { FaTrash, FaEdit, FaStar, FaCheck } from "react-icons/fa";
 import axios from "axios";
@@ -23,7 +23,7 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
   const handleToggleFavorite = async (note) => {
     try {
       await axios.put(
-        `${BASE_URL}/notes/${note._id}`,
+        `${BASE_URL}/notes/${note.id}`, // Fix
         { favorite: !note.favorite },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -36,7 +36,7 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
   const handleToggleCompleted = async (note) => {
     try {
       await axios.put(
-        `${BASE_URL}/notes/${note._id}`,
+        `${BASE_URL}/notes/${note.id}`, // ✅ FIX
         { completed: !note.completed },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -56,10 +56,9 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
   });
 
   if (filteredNotes.length === 0) {
-    return <p className="text-center text-gray-500">{t.noNotes}</p>;
+    return <p className="text-center text-gray-500">{t("noNotes")}</p>;
   }
 
-  // Definimos emoji alusivo según estado
   const getEmoji = (note) => {
     if (note.completed) return "✅";
     if (note.favorite) return "⭐";
@@ -70,20 +69,22 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
     <div className="grid gap-3">
       {filteredNotes.map((note) => (
         <div
-          key={note._id}
+          key={note.id} // ✅ Fix
           className="p-3 border rounded shadow-sm flex justify-between items-center dark:bg-gray-800"
         >
-          {/* IZQUIERDA - emoji + texto */}
+          {/* Izquierda */}
           <div className="flex items-start gap-3 flex-1">
             <span className="text-2xl">{getEmoji(note)}</span>
+
             <div>
               <h3
                 className={`font-semibold ${
                   note.completed ? "line-through text-gray-400" : ""
                 }`}
               >
-                {note.title || "Sin título"}
+                {note.title || t("noTitle")}
               </h3>
+
               <p
                 className={`${
                   note.completed ? "line-through text-gray-400" : ""
@@ -91,15 +92,16 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
               >
                 {note.content}
               </p>
+
               <p className="text-sm text-gray-500 font-semibold mt-1">
-                📂 {note.category || "Sin categoría"}
+                📂 {note.category || t("noCategory")}
               </p>
             </div>
           </div>
 
-          {/* DERECHA - acciones */}
+          {/* Derecha */}
           <div className="flex gap-3">
-            <button onClick={() => handleToggleFavorite(note)} title="Favorito">
+            <button onClick={() => handleToggleFavorite(note)} title={t("favorite")}>
               <FaStar
                 className={
                   note.favorite
@@ -108,10 +110,8 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
                 }
               />
             </button>
-            <button
-              onClick={() => handleToggleCompleted(note)}
-              title="Completado"
-            >
+
+            <button onClick={() => handleToggleCompleted(note)} title={t("completed")}>
               <FaCheck
                 className={
                   note.completed
@@ -120,10 +120,12 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
                 }
               />
             </button>
-            <button onClick={() => setNoteToEdit(note)} title={t.edit}>
+
+            <button onClick={() => setNoteToEdit(note)} title={t("edit")}>
               <FaEdit className="text-blue-500 font-semibold cursor-pointer" />
             </button>
-            <button onClick={() => handleDelete(note._id)} title={t.delete}>
+
+            <button onClick={() => handleDelete(note.id)} title={t("delete")}>
               <FaTrash className="text-red-500 font-semibold cursor-pointer" />
             </button>
           </div>

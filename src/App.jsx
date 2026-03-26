@@ -60,7 +60,7 @@ function App({ setIsAuth }) {
         setIsAuth={setIsAuth}
       />
 
-      <div className="container mx-auto p-4 flex flex-col gap-4">
+      <div className="container mx-auto p-4 flex flex-col gap-4 bottom-2">
         {/* Botón fijo de WhatsApp */}
         <a
           href="https://wa.me/5217221828896"

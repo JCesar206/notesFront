@@ -33,57 +33,41 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
           {/* Search */}
           <div className="relative">
             <FaSearch className="absolute left-2 top-2 text-gray-400" />
-            <input
-              className="pl-8 pr-3 py-1 rounded border dark:bg-gray-700 dark:text-white font-semibold"
-              placeholder={t("search")}
-              value={filters.keyword}
-              onChange={(e) =>
-                setFilters({ ...filters, keyword: e.target.value })
-              }
-            />
+            <input placeholder={t("search")} value={filters.keyword}
+              onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
+              className="pl-8 pr-3 py-1 rounded border dark:bg-gray-700 dark:text-white font-semibold"/>
           </div>
 
           {/* Theme */}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center gap-2 font-semibold hover:underline cursor-pointer"
-          >
-            {dark ? <FaSun size={18} /> : <FaMoon size={18} />}
+          <button onClick={toggleTheme}
+            className="flex items-center gap-2 font-semibold hover:underline cursor-pointer">
+            {dark ? <FaSun size={18}/> : <FaMoon size={18}/>}
           </button>
 
           {/* Language */}
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center gap-2 hover:underline font-semibold cursor-pointer"
-          >
+          <button onClick={toggleLanguage}
+            className="flex items-center gap-2 hover:underline font-semibold cursor-pointer">
             <IoLanguageSharp size={18} />
           </button>
 
           {/* About */}
-          <button
-            onClick={openAbout}
-            className="flex items-center gap-2 hover:underline font-semibold cursor-pointer"
-          >
-            <FaInfoCircle size={18} /> {t("about")}
+          <button onClick={openAbout}
+            className="flex items-center gap-2 hover:underline font-semibold cursor-pointer">
+            <FaInfoCircle size={18}/>
           </button>
 
           {/* Logout */}
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 hover:underline text-red-500 font-semibold cursor-pointer"
-          >
-            <FaSignOutAlt size={18} /> {t("logout")}
+          <button onClick={handleLogout}
+            className="flex items-center gap-2 hover:underline text-red-500 font-semibold cursor-pointer">
+            <FaSignOutAlt size={18}/> {t("logout")}
           </button>
         </div>
 
         {/* Mobile */}
         <div className="md:hidden">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="menu"
-            className="cursor-pointer"
-          >
-            {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+          <button onClick={() => setMenuOpen(!menuOpen)} aria-label="menu"
+            className="cursor-pointer">
+            {menuOpen ? <FaTimes size={22}/> : <FaBars size={22}/>}
           </button>
         </div>
       </div>
@@ -106,43 +90,23 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
               />
             </div>
 
-            <button
-              onClick={() => {
-                toggleTheme();
-                setMenuOpen(false);
-              }}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              {dark ? <FaSun size={18} /> : <FaMoon size={18} />} {t("theme")}
+            <button onClick={() => { toggleTheme(); setMenuOpen(false);}}
+              className="flex items-center gap-2 cursor-pointer">
+              {dark ? <FaSun size={18}/> : <FaMoon size={18}/>} {t("theme")}
             </button>
 
-            <button
-              onClick={() => {
-                toggleLanguage();
-                setMenuOpen(false);
-              }}
-              className="flex items-center gap-2 font-semibold cursor-pointer"
-            >
+            <button onClick={() => {toggleLanguage(); setMenuOpen(false); }}
+              className="flex items-center gap-2 font-semibold cursor-pointer">
               <IoLanguageSharp size={18} />
             </button>
 
-            <button
-              onClick={() => {
-                openAbout();
-                setMenuOpen(false);
-              }}
-              className="flex items-center gap-2 font-semibold cursor-pointer"
-            >
+            <button onClick={() => { openAbout(); setMenuOpen(false); }}
+              className="flex items-center gap-2 font-semibold cursor-pointer">
               <FaInfoCircle size={18} />
             </button>
 
-            <button
-              onClick={() => {
-                handleLogout();
-                setMenuOpen(false);
-              }}
-              className="flex items-center gap-2 text-red-500 font-semibold cursor-pointer"
-            >
+            <button onClick={() => { handleLogout(); setMenuOpen(false); }}
+              className="flex items-center gap-2 text-red-500 font-semibold cursor-pointer">
               <FaSignOutAlt size={18} /> {t("logout")}
             </button>
           </div>
