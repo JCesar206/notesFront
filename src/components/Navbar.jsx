@@ -41,7 +41,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             {darkMode ? <FaSun size={18}/> : <FaMoon size={18}/>}
           </button>
 
-          <button onClick={toggleLang} className="flex items-center gap-2 hover:underline font-semibold cursor-pointer">
+          <button onClick={toggleLanguage} className="flex items-center gap-2 hover:underline font-semibold cursor-pointer">
             <IoLanguageSharp size={18}/>
           </button>
 
@@ -88,7 +88,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
               {darkMode ? <FaSun size={18}/> : <FaMoon size={18}/>} {t.theme}
             </button>
 
-            <button onClick={() => { toggleLang(); setMenuOpen(false); }} className="flex items-center gap-2 font-semibold cursor-pointer">
+            <button onClick={() => { toggleLanguage(); setMenuOpen(false); }} className="flex items-center gap-2 font-semibold cursor-pointer">
               <IoLanguageSharp size={18}/>
             </button>
 
