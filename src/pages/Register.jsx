@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLanguage } from "../context/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 

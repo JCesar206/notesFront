@@ -4,11 +4,13 @@ import AddNote from "./components/AddNote";
 import NotesList from "./components/NotesList";
 import AboutModal from "./components/AboutModal";
 import Footer from "./components/Footer";
-import axios from "axios";
+
 import { LanguageContext } from "./context/LanguageContext";
 import { ThemeContext } from "./context/ThemeContext";
-import "./App.css";
 import { FaWhatsapp } from "react-icons/fa";
+import "./App.css";
+
+import axios from "axios";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 

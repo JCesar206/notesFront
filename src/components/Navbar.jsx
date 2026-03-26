@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { FaBars, FaTimes, FaSun, FaMoon, FaInfoCircle, FaSearch, FaSignOutAlt, FaStar, FaCheck} from "react-icons/fa";
 import { IoLanguageSharp } from "react-icons/io5";
 import { useLanguage } from "../context/LanguageContext";
-import { ThemeContext } from "../contexts/ThemeContext";
+import { ThemeContext } from "../context/ThemeContext";
 import { useNavigate } from "react-router-dom";
 
 function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
