@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "./components/Navbar";
 import AddNote from "./components/AddNote";
 import NotesList from "./components/NotesList";
 import AboutModal from "./components/AboutModal";
 import Footer from "./components/Footer";
 import axios from "axios";
-import { LanguageContext } from "./contexts/LangContext";
-import { ThemeContext } from "./contexts/ThemeContext";
+import { LanguageContext } from "./context/LanguageContext";
+import { ThemeContext } from "./context/ThemeContext";
 import "./App.css";
 import { FaWhatsapp } from "react-icons/fa";
 
