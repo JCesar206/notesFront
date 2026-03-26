@@ -1,17 +1,13 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { LangContext } from "../contexts/LangContext";
+import { useLanguage } from "../context/LanguageContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
 
 function Login({ setIsAuth }) {
-  const { lang } = useContext(LangContext);
-  const t = {
-    es: { email: "Correo", password: "Contraseña", login: "Iniciar sesión", register: "Registrarse", forgot: "Olvidé password", error: "Error en login" },
-    en: { email: "Email", password: "Password", login: "Login", register: "Register", forgot: "Forgot password", error: "Login error" }
-  }[lang];
+  const { t } = useLanguage();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
