@@ -4,9 +4,9 @@ export const translations = {
 		logout: "Cerrar sesión",
 		titleApp: "Nota Loka",
 		search: "Buscar",
-		titleNote: "Título de la nota",
-		content: "Contenido de la nota...",
-		category: "Categoría",
+		titleNote: "Título de la nota ...",
+		content: "Contenido de la nota ...",
+		category: "Categoría ...",
 		favorite: "Favorito",
 		completed: "Completado",
 		add: "Agregar",
@@ -26,16 +26,21 @@ export const translations = {
 		register: "Registrarse",
 		success: "Registro éxitoso",
 		send: "Envíar",
-		message: "Si existe te llegará un correo."
+		message: "Si existe te llegará un correo.",
+		userTest: "Usuario de prueba",
+		passwordTest: "Contraseña",
+		theme: "Tema",
+		language: "Idioma",
+		about: "Acerca de mi ..."
 	},
 	en: {
 		login: "Login",
 		logout: "Logout",
 		titleApp: "Crazy Note",
 		search: "Search",
-		titleNote: "Title note...",
-		content: "Content",
-		category: "Category",
+		titleNote: "Title note ...",
+		content: "Content ...",
+		category: "Category ...",
 		favorite: "Favorite",
 		completed: "Completed",
 		add: "Add",
@@ -55,6 +60,11 @@ export const translations = {
 		register: "Register",
 		success: "Registered",
 		send: "Send",
-		message: "If exists you'll receive an email."
+		message: "If exists you'll receive an email.",
+		userTest: "User test",
+		passwordTest: "Password",
+		theme: "Theme",
+		language: "Language",
+		about: "About me ..."
 	}
 }

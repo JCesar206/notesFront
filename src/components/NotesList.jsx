@@ -1,4 +1,3 @@
-/* jsx id="n0xg6o" */
 import { useLanguage } from "../context/LanguageContext";
 import { FaTrash, FaEdit, FaStar, FaCheck } from "react-icons/fa";
 import axios from "axios";
@@ -70,8 +69,7 @@ function NotesList({ notes, fetchNotes, filters, setNoteToEdit }) {
       {filteredNotes.map((note) => (
         <div
           key={note.id} // ✅ Fix
-          className="p-3 border rounded shadow-sm flex justify-between items-center dark:bg-gray-800"
-        >
+          className="p-3 border rounded shadow-sm flex justify-between items-center dark:bg-gray-800 dark:text-white">
           {/* Izquierda */}
           <div className="flex items-start gap-3 flex-1">
             <span className="text-2xl">{getEmoji(note)}</span>

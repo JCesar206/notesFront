@@ -48,11 +48,7 @@ function App({ setIsAuth }) {
   }, []);
 
   return (
-    <div
-      className={`${
-        dark ? "dark bg-gray-900 text-white" : "bg-gray-100 text-black"
-      } min-h-screen`}
-    >
+    <div className="bg-gray-100 text-black dark:bg-gray-900 dark:text-white min-h-screen">
       <Navbar
         filters={filters}
         setFilters={setFilters}
@@ -60,7 +56,7 @@ function App({ setIsAuth }) {
         setIsAuth={setIsAuth}
       />
 
-      <div className="container mx-auto p-4 flex flex-col gap-4 bottom-2">
+      <div className="container mx-auto p-4 flex flex-col gap-4">
         {/* Botón fijo de WhatsApp */}
         <a
           href="https://wa.me/5217221828896"
@@ -68,7 +64,7 @@ function App({ setIsAuth }) {
           rel="noopener noreferrer"
           className="fixed bottom-10 right-4 bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600"
         >
-          <FaWhatsapp size={24} />
+          <FaWhatsapp size={24}/>
         </a>
 
         <AddNote

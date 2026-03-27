@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useLanguage } from "../context/LanguageContext";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { RxUpdate } from "react-icons/rx";
+import { MdOutlineCleaningServices } from "react-icons/md";
 import axios from "axios";
 
 const BASE_URL = "https://notesback-7rae.onrender.com/api";
@@ -89,12 +92,12 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
       />
 
       <div className="flex gap-4 items-center">
-        <label className="flex items-center gap-1">
+        <label className="flex items-center gap-1 dark:text-white font-semibold">
           <input type="checkbox" checked={favorite} onChange={() => setFavorite(!favorite)} />
           {t("favorite")} ⭐
         </label>
 
-        <label className="flex items-center gap-1">
+        <label className="flex items-center gap-1 dark:text-white font-semibold">
           <input type="checkbox" checked={completed} onChange={() => setCompleted(!completed)} />
           {t("completed")} ✅
         </label>
@@ -106,7 +109,7 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
             key={emoji}
             type="button"
             onClick={() => insertEmoji(emoji)}
-            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-400 dark:hover:bg-gray-600 cursor-pointer"
+            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-400 dark:hover:bg-gray-300 cursor-pointer"
           >
             {emoji}
           </button>
@@ -116,17 +119,19 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
       <div className="flex gap-3">
         <button
           type="submit"
-          className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700 font-semibold cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 font-semibold cursor-pointer dark:bg-white dark:hover:bg-blue-300 dark:text-blue-700"
         >
-          {noteToEdit ? t("update") : t("add")}
+          {noteToEdit 
+          ? <><RxUpdate size={18}/>{t("update")}</>
+          : <><IoIosAddCircleOutline size={18}/>{t("add")}</>}
         </button>
 
         <button
           type="button"
           onClick={handleClear}
-          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 font-semibold cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 font-semibold cursor-pointer dark:bg-white dark:hover:bg-gray-300 dark:text-gray-700"
         >
-          {t("clear")}
+          <MdOutlineCleaningServices size={18}/>{t("clear")}
         </button>
       </div>
     </form>

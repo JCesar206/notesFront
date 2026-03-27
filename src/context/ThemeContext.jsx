@@ -5,7 +5,11 @@ export const ThemeProvider = ({ children }) => {
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
+    if (dark) {
+      document.documentElement.classList.add("dark");
+    } else {
+    document.documentElement.classList.toggle("dark");
+    }
   }, [dark]);
 
   const toggleTheme = () => setDark((prev) => !prev);

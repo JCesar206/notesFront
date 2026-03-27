@@ -39,12 +39,12 @@ function Login({ setIsAuth }) {
           <input type={show ? "text" : "password"} placeholder={t.password} value={password} onChange={e=>setPassword(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white w-full" required />
           <button type="button" className="absolute right-2 top-2 text-gray-600 cursor-pointer" onClick={()=>setShow(!show)}>{show ? <FaEyeSlash/> : <FaEye/>}</button>
         </div>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-800 text-white font-semibold p-2 rounded cursor-pointer">{t.login}</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-800 text-white font-semibold p-2 rounded cursor-pointer">{t("login")}</button>
         <div className="flex justify-between text-sm">
-          <Link to="/register" className="underline font-semibold cursor-pointer">{t.register}</Link>
-          <Link to="/forgot-password" className="underline font-semibold cursor-pointer">{t.forgot}</Link>
+          <Link to="/register" className="underline font-semibold cursor-pointer">{t("register")}</Link>
+          <Link to="/forgot-password" className="underline font-semibold cursor-pointer">{t("forgot")}</Link>
         </div>
-        <p className="text-sm font-semibold text-gray-800">Usuario de prueba: usuario@test.com Contraseña: Usuario1!</p>
+        <p className="text-sm font-semibold text-gray-800">{t("userTest")}: test@example.com {t("passwordTest")}: 123456</p>
       </form>
     </div>
   );
