@@ -31,20 +31,22 @@ function Login({ setIsAuth }) {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-white dark:bg-gray-800 rounded shadow">
+    <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded shadow">
       <form onSubmit={submit} className="flex flex-col gap-3">
         {error && <div className="text-red-500 font-semibold">{error}</div>}
-        <input type="email" placeholder={t.email} value={email} onChange={e=>setEmail(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white" required />
+        <input type="email" placeholder={t("email")} value={email} onChange={e=>setEmail(e.target.value)} className="p-2 rounded border" required/>
+
         <div className="relative">
-          <input type={show ? "text" : "password"} placeholder={t.password} value={password} onChange={e=>setPassword(e.target.value)} className="p-2 rounded border dark:bg-gray-700 dark:text-white w-full" required />
-          <button type="button" className="absolute right-2 top-2 text-gray-600 cursor-pointer" onClick={()=>setShow(!show)}>{show ? <FaEyeSlash/> : <FaEye/>}</button>
+          <input type={show ? "text" : "password"} placeholder={t("password")} value={password} onChange={e=>setPassword(e.target.value)} className="p-2 rounded border w-full" required/>
+          <button type="button" className="absolute right-2 top-2 text-gray-600 font-semibold cursor-pointer" onClick={()=>setShow(!show)}>{show ? <FaEyeSlash/> : <FaEye/>}</button>
         </div>
+
         <button type="submit" className="bg-blue-500 hover:bg-blue-800 text-white font-semibold p-2 rounded cursor-pointer">{t("login")}</button>
         <div className="flex justify-between text-sm">
-          <Link to="/register" className="underline font-semibold cursor-pointer">{t("register")}</Link>
-          <Link to="/forgot-password" className="underline font-semibold cursor-pointer">{t("forgot")}</Link>
+          <Link to="/register" className="underline font-semibold cursor-pointer hover:text-green-600">{t("register")}</Link>
+          <Link to="/forgot-password" className="underline font-semibold cursor-pointer hover:text-blue-600">{t("forgot")}</Link>
         </div>
-        <p className="text-sm font-semibold text-gray-800">{t("userTest")}: test@example.com {t("passwordTest")}: 123456</p>
+        <p className="text-sm font-semibold text-gray-800">{t("userTest")}: test@example.com / {t("passwordTest")}: 123456</p>
       </form>
     </div>
   );

@@ -31,7 +31,8 @@ export const translations = {
 		passwordTest: "Contraseña",
 		theme: "Tema",
 		language: "Idioma",
-		about: "Acerca de mi ..."
+		about: "Acerca de mi ...",
+		forgot: "¿Olvidaste tu contraseña?, click aquí"
 	},
 	en: {
 		login: "Login",
@@ -65,6 +66,7 @@ export const translations = {
 		passwordTest: "Password",
 		theme: "Theme",
 		language: "Language",
-		about: "About me ..."
+		about: "About me ...",
+		forgot: "Forgot your password? Click here"
 	}
 }

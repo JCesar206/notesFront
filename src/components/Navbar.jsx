@@ -67,7 +67,7 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
         {/* Mobile */}
         <div className="md:hidden">
           <button onClick={() => setMenuOpen(!menuOpen)} aria-label="menu"
-            className="cursor-pointer">
+            className="p-3 md:p-2 cursor-pointer">
             {menuOpen ? <FaTimes size={22}/> : <FaBars size={22}/>}
           </button>
         </div>
@@ -75,13 +75,13 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className={`md:hidden px-4 pb-4 pt-4 space-y-6 rounded ${dark ? "bg-gray-800" : "bg-white"}`}>
+        <div className={`md:hidden px-4 pb-6 pt-6 rounded ${dark ? "bg-gray-800" : "bg-white"}`}>
           <div className="flex flex-col gap-2">
             {/* Search */}
             <div className="relative">
               <FaSearch className="absolute left-2 top-2 text-gray-400"/>
               <input
-                className="pl-8 pr-3 py-1 w-full rounded border dark:bg-gray-700 dark:text-white"
+                className="pl-8 pr-3 py-2 w-full rounded border dark:bg-gray-700 dark:text-white"
                 placeholder={t("search")}
                 value={filters.keyword}
                 onChange={(e) => {
@@ -92,22 +92,22 @@ function Navbar({ filters, setFilters, openAbout, setIsAuth }) {
             </div>
 
             <button onClick={() => { toggleTheme(); setMenuOpen(false);}}
-              className="flex items-center justify-center gap-2 font-semibold cursor-pointer dark:text-black hover:bg-gray-300 hover:scale-110 rounded">
+              className="flex items-center justify-center gap-2 font-semibold cursor-pointer dark:text-black hover:bg-gray-300 rounded">
               {dark ? <FaSun size={18}/> : <FaMoon size={18}/>} {t("theme")}
             </button>
 
             <button onClick={() => {toggleLanguage(); setMenuOpen(false); }}
-              className="flex items-center justify-center gap-2 font-semibold cursor-pointer dark:text-black hover:bg-gray-300 hover:scale-110 rounded">
+              className="flex items-center justify-center gap-2 font-semibold cursor-pointer dark:text-black hover:bg-gray-300 rounded">
               <IoLanguageSharp size={18}/>{t("language")}
             </button>
 
             <button onClick={() => { openAbout(); setMenuOpen(false); }}
-              className="flex items-center justify-center gap-2 font-semibold cursor-pointer dark:text-black hover:bg-gray-300 hover:scale-110 rounded">
+              className="flex items-center justify-center gap-2 font-semibold cursor-pointer dark:text-black hover:bg-gray-300 rounded">
               <FaInfoCircle size={18}/> {t("about")}
             </button>
 
             <button onClick={() => { handleLogout(); setMenuOpen(false); }}
-              className="flex items-center justify-center gap-2 text-red-500 font-semibold cursor-pointer hover:bg-red-200 hover:scale-110 rounded">
+              className="flex items-center justify-center gap-2 text-red-500 font-semibold cursor-pointer hover:bg-red-200 rounded">
               <FaSignOutAlt size={18}/> {t("logout")}
             </button>
           </div>
