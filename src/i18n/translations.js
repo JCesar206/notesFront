@@ -40,7 +40,7 @@ export const translations = {
 		titleApp: "Crazy Note",
 		search: "Search",
 		titleNote: "Title note ...",
-		content: "Content ...",
+		content: "Note content ...",
 		category: "Category ...",
 		favorite: "Favorite",
 		completed: "Completed",
