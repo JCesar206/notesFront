@@ -104,7 +104,7 @@ function AddNote({ fetchNotes, noteToEdit, setNoteToEdit }) {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {["😀","🔥","✅","😎","⭐","😱","👍","🐶","🐱","❤️","💯","🥺","🤯","😡","🙏","🤗","😍","🍺","😃","","😁","😆","😇","🥳","🤩"].map(emoji => (
+        {["😀","🔥","✅","😎","⭐","😱","👍","🐶","🐱","❤️","💯","🥺","🤯","😡","🙏","🤗","😍","🍺","😃","😁","😆","😇","🥳","🤩"].map(emoji => (
           <button
             key={emoji}
             type="button"
